@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_calendar/constants/constants.dart';
+import 'package:schedule_calendar/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -7,6 +9,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      backgroundColor: white,
+      appBar: SchedulCalendarAppBar(imageUrl: '$imagePath/user.png'),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // SchedulCalendarAppBar(),
+          ],
+        ),
+      ),
+    );
   }
 }
