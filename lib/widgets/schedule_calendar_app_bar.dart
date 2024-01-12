@@ -26,6 +26,7 @@ class SchedulCalendarAppBar extends StatelessWidget implements PreferredSizeWidg
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     const iconPadding = EdgeInsets.symmetric(
       vertical: 8.0,
       horizontal: 12.0,
@@ -41,12 +42,12 @@ class SchedulCalendarAppBar extends StatelessWidget implements PreferredSizeWidg
               IconButton(
                 padding: iconPadding,
                 iconSize: iconSize,
-                icon: SvgPicture.asset('$iconPath/back.svg'),
+                icon: SvgPicture.asset(backIcon),
                 onPressed: onPressBack,
               ),
               CircleAvatar(
                 backgroundColor: Colors.transparent,
-                radius: 24,
+                radius: 24.0,
                 backgroundImage: AssetImage(imageUrl),
               ),
               const HorizontalSpace(13.0),
@@ -54,16 +55,23 @@ class SchedulCalendarAppBar extends StatelessWidget implements PreferredSizeWidg
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Body(name),
-                  Body(
-                    email,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w300,
+                  Text(
+                    name,
+                    style: textTheme.bodyLarge,
                   ),
-                  Body(
+                  Text(
+                    email,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontSize: 11.0,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  Text(
                     workPosition,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w300,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontSize: 11.0,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                 ],
               ),
@@ -72,7 +80,7 @@ class SchedulCalendarAppBar extends StatelessWidget implements PreferredSizeWidg
           IconButton(
             padding: iconPadding,
             iconSize: iconSize,
-            icon: SvgPicture.asset('$iconPath/more.svg'),
+            icon: SvgPicture.asset(moreIcon),
             onPressed: onPressBack,
           ),
         ],

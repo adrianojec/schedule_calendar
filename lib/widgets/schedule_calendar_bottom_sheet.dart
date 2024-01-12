@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+
+import '../constants/constants.dart';
+
+const double _bottomSheetBorderRadius = 24.0;
+
+class ScheduleCalendarBottomSheet extends StatelessWidget {
+  final double? height;
+  final Widget? child;
+
+  const ScheduleCalendarBottomSheet({
+    this.height,
+    this.child,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadiusDirectional.only(
+          topStart: Radius.circular(_bottomSheetBorderRadius),
+          topEnd: Radius.circular(_bottomSheetBorderRadius),
+        ),
+        color: blancoWhite,
+        boxShadow: [
+          BoxShadow(
+            offset: const Offset(0, -1),
+            blurRadius: 10,
+            color: blackPanther.withOpacity(0.25),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_calendar/utils/theme.dart';
 import 'package:schedule_calendar/routes/route_manager.dart';
 import 'package:schedule_calendar/screens/screens.dart';
 
@@ -7,11 +8,12 @@ class ScheduleCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: scheduleCalendarTheme,
       debugShowCheckedModeBanner: false,
       initialRoute: HomeScreen.routeName,
       onGenerateRoute: RouteManager.generateRoute,
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
