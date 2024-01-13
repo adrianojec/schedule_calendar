@@ -7,13 +7,15 @@ class ScheduleEvent {
   final EventType type;
   final String description;
   final int duration;
+  final SessionType session;
 
   ScheduleEvent({
+    required this.imageUrl,
     required this.title,
     required this.userRole,
     required this.type,
     required this.description,
     required this.duration,
-    required this.imageUrl,
+    required this.session,
   });
 }

@@ -23,12 +23,12 @@ class ScheduleCalendarBottomSheet extends StatelessWidget {
           topStart: Radius.circular(_bottomSheetBorderRadius),
           topEnd: Radius.circular(_bottomSheetBorderRadius),
         ),
-        color: blancoWhite,
+        color: Palette.blancoWhite,
         boxShadow: [
           BoxShadow(
             offset: const Offset(0, -1),
             blurRadius: 10,
-            color: blackPanther.withOpacity(0.25),
+            color: Palette.blackPanther.withOpacity(0.25),
           ),
         ],
       ),

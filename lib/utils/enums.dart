@@ -1,8 +1,9 @@
 enum EventType {
-  inperson('In-Person'),
-  call('Call');
+  inperson,
+  call,
+}
 
-  final String name;
-
-  const EventType(this.name);
+enum SessionType {
+  multiple,
+  single,
 }

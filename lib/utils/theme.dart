@@ -3,33 +3,34 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 
 final ThemeData scheduleCalendarTheme = ThemeData(
+  colorScheme: ColorScheme.fromSwatch(backgroundColor: Palette.white),
   textTheme: const TextTheme(
     headlineLarge: TextStyle(
-      color: blancoWhite,
+      color: Palette.blancoWhite,
       fontFamily: 'LemonMilkPro',
       fontSize: 24.0,
       fontWeight: FontWeight.w700,
     ),
     titleLarge: TextStyle(
-      color: ashGrey,
+      color: Palette.ashGrey,
       fontSize: 16.0,
       fontFamily: 'LemonMilkPro',
       fontWeight: FontWeight.w300,
     ),
     labelLarge: TextStyle(
-      color: ashGrey,
+      color: Palette.ashGrey,
       fontSize: 14.0,
       fontFamily: 'LemonMilkPro',
       fontWeight: FontWeight.w700,
     ),
     bodyLarge: TextStyle(
-      color: black,
+      color: Palette.black,
       fontSize: 12.0,
       fontFamily: 'LemonMilkPro',
       fontWeight: FontWeight.w600,
     ),
     bodySmall: TextStyle(
-      color: ashGrey,
+      color: Palette.ashGrey,
       fontSize: 10.0,
       fontFamily: 'LemonMilkPro',
       fontWeight: FontWeight.w300,

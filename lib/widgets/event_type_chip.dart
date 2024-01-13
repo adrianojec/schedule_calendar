@@ -35,7 +35,7 @@ class EventTypeChip extends StatelessWidget {
           Text(
             text ?? emptyString,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: black,
+                  color: Palette.black,
                   fontSize: 9.0,
                 ),
           ),

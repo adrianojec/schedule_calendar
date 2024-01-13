@@ -6,6 +6,8 @@ class RouteManager {
     switch (settings.name) {
       case HomeScreen.routeName:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case SelectEventDateScreen.routeName:
+        return MaterialPageRoute(builder: (_) => const SelectEventDateScreen());
       default:
         return throw Exception('Error 404');
     }

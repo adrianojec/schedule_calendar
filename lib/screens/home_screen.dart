@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/data/mock/event_data.dart';
+import 'package:schedule_calendar/screens/select_event_date_screen.dart';
+import 'package:schedule_calendar/utils/extensions.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
 
 const double _addIconSize = 40.0;
@@ -17,8 +19,8 @@ class HomeScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: white,
-      appBar: const SchedulCalendarAppBar(imageUrl: userImage),
+      backgroundColor: Palette.white,
+      appBar: const SchedulCalendarAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -35,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                       border: InputBorder.none,
                       hintText: writeMessage,
                       hintStyle: textTheme.labelLarge?.copyWith(
-                        color: mistyGrey,
+                        color: Palette.mistyGrey,
                         fontWeight: FontWeight.w300,
                       ),
                     ),
@@ -55,11 +57,11 @@ class HomeScreen extends StatelessWidget {
                         width: _addIconSize,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: boscoGrey,
+                          color: Palette.boscoGrey,
                         ),
                         child: IconButton(
                           onPressed: () => _showBottomSheet(context),
-                          color: white,
+                          color: Palette.white,
                           icon: const Icon(Icons.add),
                         ),
                       ),
@@ -76,7 +78,7 @@ class HomeScreen extends StatelessWidget {
 
   void _showBottomSheet(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = context.appTheme.textTheme;
 
     showModalBottomSheet(
       barrierColor: Colors.transparent,
@@ -103,7 +105,13 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     itemCount: events.length,
-                    itemBuilder: (_, index) => EventTile(event: events[index]),
+                    itemBuilder: (_, index) => EventTile(
+                      event: events[index],
+                      onPressed: () {
+                        context.navigator.pop();
+                        context.navigator.pushNamed(SelectEventDateScreen.routeName);
+                      },
+                    ),
                   ),
                   Center(
                     child: TextButton(

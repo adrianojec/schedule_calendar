@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_calendar/data/mock/model/schedule_event.dart';
 import 'package:schedule_calendar/utils/enums.dart';
+import 'package:schedule_calendar/utils/extensions.dart';
 
 import '../constants/constants.dart';
 import 'widgets.dart';
 
 class EventTile extends StatelessWidget {
   final ScheduleEvent event;
+  final VoidCallback? onPressed;
 
   const EventTile({
     required this.event,
+    this.onPressed,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = context.appTheme.textTheme;
     final isCallType = event.type == EventType.call;
 
     return Container(
@@ -23,7 +26,7 @@ class EventTile extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: ashGrey,
+            color: Palette.ashGrey,
             width: 0.5,
           ),
         ),
@@ -63,7 +66,7 @@ class EventTile extends StatelessWidget {
                                   Text(
                                     event.userRole,
                                     style: textTheme.bodyLarge?.copyWith(
-                                      color: blackPanther,
+                                      color: Palette.blackPanther,
                                       fontSize: 11,
                                       fontWeight: FontWeight.w400,
                                       letterSpacing: -0.2,
@@ -71,7 +74,7 @@ class EventTile extends StatelessWidget {
                                   ),
                                   const HorizontalSpace(8.0),
                                   EventTypeChip(
-                                    color: isCallType ? matPastelPurple : const Color(0xFFBCDCDA),
+                                    color: isCallType ? Palette.matPastelPurple : const Color(0xFFBCDCDA),
                                     leadingIcon: isCallType
                                         ? const Icon(
                                             Icons.headphones,
@@ -85,7 +88,7 @@ class EventTile extends StatelessWidget {
                             ],
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: onPressed,
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 8.0,
@@ -93,12 +96,12 @@ class EventTile extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
-                                color: matGreen,
+                                color: Palette.matGreen,
                               ),
                               child: Text(
                                 '${event.duration} mins',
                                 style: textTheme.bodyLarge?.copyWith(
-                                  color: blancoWhite,
+                                  color: Palette.blancoWhite,
                                 ),
                               ),
                             ),
