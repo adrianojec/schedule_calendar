@@ -3,6 +3,7 @@ export 'spacer/vertical_space.dart';
 export 'spacer/horizontal_space.dart';
 
 // Widgets
+export 'calendar.dart';
 export 'ellipsis_text.dart';
 export 'event_tile.dart';
 export 'event_type_chip.dart';

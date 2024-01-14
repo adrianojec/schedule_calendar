@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_calendar/utils/extensions.dart';
+import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/spacer/horizontal_space.dart';
 
 class UserProfile extends StatelessWidget {

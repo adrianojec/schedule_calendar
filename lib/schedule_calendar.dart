@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_calendar/utils/theme.dart';
+import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/routes/route_manager.dart';
 import 'package:schedule_calendar/screens/screens.dart';
 

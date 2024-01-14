@@ -1,4 +1,4 @@
-import 'package:schedule_calendar/utils/enums.dart';
+import 'package:schedule_calendar/utils/utils.dart';
 
 class ScheduleEvent {
   final String imageUrl;

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/data/mock/event_data.dart';
 import 'package:schedule_calendar/screens/select_event_date_screen.dart';
-import 'package:schedule_calendar/utils/extensions.dart';
+import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
 
 const double _addIconSize = 40.0;

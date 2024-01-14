@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_calendar/utils/extensions.dart';
+import 'package:schedule_calendar/utils/utils.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 
 import '../constants/constants.dart';
