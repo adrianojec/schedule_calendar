@@ -9,6 +9,12 @@ class CalendarConfig {
 
   CalendarConfig(this.textTheme);
 
+  // Decoration
+  Decoration get _rangeDecoration => const BoxDecoration(
+        color: Palette.matTurquoise,
+        shape: BoxShape.circle,
+      );
+
   // TextStyle
   TextStyle get _defaultStyle => const TextStyle();
 
@@ -61,12 +67,6 @@ class CalendarConfig {
         letterSpacing: -0.2,
       ) ??
       _defaultStyle;
-
-  // Decoration
-  Decoration get _rangeDecoration => const BoxDecoration(
-        color: Palette.matTurquoise,
-        shape: BoxShape.circle,
-      );
 
   DaysOfWeekStyle get daysOfWeekStyle => DaysOfWeekStyle(
         weekdayStyle: _weekdayStyle,

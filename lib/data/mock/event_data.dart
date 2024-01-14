@@ -1,5 +1,5 @@
 import 'package:schedule_calendar/constants/constants.dart';
-import 'package:schedule_calendar/data/mock/model/schedule_event.dart';
+import 'package:schedule_calendar/data/model/schedule_event.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 
 final events = [

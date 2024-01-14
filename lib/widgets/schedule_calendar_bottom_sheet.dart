@@ -5,14 +5,14 @@ import '../constants/constants.dart';
 const double _bottomSheetBorderRadius = 24.0;
 
 class ScheduleCalendarBottomSheet extends StatelessWidget {
-  final double? height;
-  final Widget? child;
-
   const ScheduleCalendarBottomSheet({
     this.height,
     this.child,
     super.key,
   });
+
+  final double? height;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

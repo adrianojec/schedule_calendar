@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_calendar/data/mock/model/schedule_event.dart';
+import 'package:schedule_calendar/data/model/schedule_event.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 
 import '../constants/constants.dart';
 import 'widgets.dart';
 
 class EventTile extends StatelessWidget {
-  final ScheduleEvent event;
-  final VoidCallback? onPressed;
-
   const EventTile({
     required this.event,
     this.onPressed,
     super.key,
   });
+
+  final ScheduleEvent event;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -44,69 +44,65 @@ class EventTile extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Text(
+                            event.title,
+                            style: textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                          const VerticalSpace(4.0),
+                          Row(
                             children: [
                               Text(
-                                event.title,
-                                style: textTheme.bodySmall?.copyWith(
-                                  fontWeight: FontWeight.w500,
+                                event.userRole,
+                                style: textTheme.bodyLarge?.copyWith(
+                                  color: Palette.blackPanther,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w400,
                                   letterSpacing: -0.2,
                                 ),
                               ),
-                              const VerticalSpace(4.0),
-                              Row(
-                                children: [
-                                  Text(
-                                    event.userRole,
-                                    style: textTheme.bodyLarge?.copyWith(
-                                      color: Palette.blackPanther,
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: -0.2,
-                                    ),
-                                  ),
-                                  const HorizontalSpace(8.0),
-                                  EventTypeChip(
-                                    color: isCallType ? Palette.matPastelPurple : const Color(0xFFBCDCDA),
-                                    leadingIcon: isCallType
-                                        ? const Icon(
-                                            Icons.headphones,
-                                            size: 11.0,
-                                          )
-                                        : null,
-                                    text: event.type.name,
-                                  )
-                                ],
+                              const HorizontalSpace(8.0),
+                              EventTypeChip(
+                                color: isCallType ? Palette.matPastelPurple : const Color(0xFFBCDCDA),
+                                leadingIcon: isCallType
+                                    ? const Icon(
+                                        Icons.headphones,
+                                        size: 11.0,
+                                      )
+                                    : null,
+                                text: event.type.name,
                               )
                             ],
+                          )
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: onPressed,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 16.0,
                           ),
-                          GestureDetector(
-                            onTap: onPressed,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8.0,
-                                horizontal: 16.0,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                color: Palette.matGreen,
-                              ),
-                              child: Text(
-                                '${event.duration} mins',
-                                style: textTheme.bodyLarge?.copyWith(
-                                  color: Palette.blancoWhite,
-                                ),
-                              ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Palette.matGreen,
+                          ),
+                          child: Text(
+                            '${event.duration} mins',
+                            style: textTheme.bodyLarge?.copyWith(
+                              color: Palette.blancoWhite,
                             ),
                           ),
-                        ],
-                      )
+                        ),
+                      ),
                     ],
                   ),
                   const VerticalSpace(7.0),

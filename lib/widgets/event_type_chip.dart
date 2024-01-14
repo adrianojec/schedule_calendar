@@ -4,16 +4,16 @@ import 'package:schedule_calendar/widgets/widgets.dart';
 import '../constants/constants.dart';
 
 class EventTypeChip extends StatelessWidget {
-  final Color? color;
-  final Widget? leadingIcon;
-  final String? text;
-
   const EventTypeChip({
     this.color,
     this.leadingIcon,
     this.text,
     super.key,
   });
+
+  final Color? color;
+  final Widget? leadingIcon;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {

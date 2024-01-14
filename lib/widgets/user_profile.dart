@@ -3,11 +3,6 @@ import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/spacer/horizontal_space.dart';
 
 class UserProfile extends StatelessWidget {
-  final String imageUrl;
-  final String name;
-  final String email;
-  final String workPosition;
-
   const UserProfile({
     required this.imageUrl,
     this.name = 'Sarah Chu',
@@ -15,6 +10,11 @@ class UserProfile extends StatelessWidget {
     this.workPosition = 'Personal Trainer',
     super.key,
   });
+
+  final String imageUrl;
+  final String name;
+  final String email;
+  final String workPosition;
 
   @override
   Widget build(BuildContext context) {

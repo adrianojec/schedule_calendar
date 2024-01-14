@@ -7,12 +7,12 @@ const double _daysOfWeekHeight = 20.0;
 const double _rowHeight = 60.0;
 
 class Calendar extends StatelessWidget {
-  final OnDaySelected? onDaySelected;
-
   const Calendar({
     this.onDaySelected,
     super.key,
   });
+
+  final OnDaySelected? onDaySelected;
 
   @override
   Widget build(BuildContext context) {

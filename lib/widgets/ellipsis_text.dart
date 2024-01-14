@@ -4,12 +4,12 @@ import 'package:schedule_calendar/utils/utils.dart';
 import '../constants/constants.dart';
 
 class EllipsisText extends StatefulWidget {
-  final String? text;
-
   const EllipsisText({
     this.text,
     super.key,
   });
+
+  final String? text;
 
   @override
   State<EllipsisText> createState() => _EllipsisTextState();

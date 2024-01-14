@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class HorizontalSpace extends StatelessWidget {
-  final double width;
+  const HorizontalSpace(
+    this.width, {
+    super.key,
+  });
 
-  const HorizontalSpace(this.width, {super.key});
+  final double width;
 
   @override
   Widget build(BuildContext context) => SizedBox(width: width);

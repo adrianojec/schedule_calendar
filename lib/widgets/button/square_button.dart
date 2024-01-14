@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 
-import '../constants/constants.dart';
-import 'widgets.dart';
+import '../../constants/constants.dart';
+import '../widgets.dart';
 
 const double _buttonSize = 72.0;
 
 class SquareButton extends StatelessWidget {
-  final Widget? title;
-  final String? subtitle;
-  final String? tooltipMessage;
-
   const SquareButton({
     this.title,
     this.subtitle,
     this.tooltipMessage,
     super.key,
   });
+
+  final Widget? title;
+  final String? subtitle;
+  final String? tooltipMessage;
 
   @override
   Widget build(BuildContext context) {
