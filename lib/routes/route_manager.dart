@@ -18,6 +18,8 @@ class RouteManager {
         );
       case ScheduleSessionScreen.routeName:
         return MaterialPageRoute(builder: (_) => const ScheduleSessionScreen());
+      case InvitationSentScreen.routeName:
+        return MaterialPageRoute(builder: (_) => const InvitationSentScreen());
       default:
         return throw Exception('Error 404');
     }

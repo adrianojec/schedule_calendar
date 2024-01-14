@@ -6,11 +6,11 @@ import 'package:swipeable_button_view/swipeable_button_view.dart';
 
 class TermsAndConditionSheet extends StatelessWidget {
   const TermsAndConditionSheet({
-    this.onAccept,
+    required this.onLoading,
     super.key,
   });
 
-  final VoidCallback? onAccept;
+  final VoidCallback onLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +44,7 @@ class TermsAndConditionSheet extends StatelessWidget {
               style: textTheme.titleLarge,
             ),
             const VerticalSpace(10.0),
+            // Terms and Condition
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
@@ -56,30 +57,38 @@ class TermsAndConditionSheet extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 16.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Palette.boscoGrey),
-                borderRadius: BorderRadius.circular(100.0),
-              ),
-              child: SwipeableButtonView(
-                onFinish: () => onAccept?.call(),
-                onWaitingProcess: () {},
-                activeColor: Palette.blancoWhite,
-                buttontextstyle: textTheme.titleLarge?.copyWith(
-                  color: Palette.boscoGrey,
-                  fontWeight: FontWeight.w400,
-                ),
-                buttonWidget: Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Palette.boscoGrey,
+            // Swipeable Button - [Swipe to accept]
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Palette.boscoGrey),
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
+                  child: SwipeableButtonView(
+                    // not needed but is required by the widget
+                    onFinish: () {},
+                    onWaitingProcess: onLoading,
+                    activeColor: Palette.blancoWhite,
+                    buttontextstyle: textTheme.titleLarge?.copyWith(
+                      color: Palette.boscoGrey,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    buttonWidget: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Palette.boscoGrey,
+                      ),
+                    ),
+                    indicatorColor: const AlwaysStoppedAnimation<Color>(Palette.boscoGrey),
+                    buttonText: swipeToAccept,
+                    isFinished: false,
                   ),
                 ),
-                buttonText: swipeToAccept,
-                isFinished: true,
               ),
             ),
+            // Cancel
             Container(
               width: size.width,
               margin: const EdgeInsets.only(bottom: 20.0),

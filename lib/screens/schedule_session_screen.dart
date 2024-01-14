@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/data/mock/event_data.dart';
+import 'package:schedule_calendar/screens/screens.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
 
@@ -124,6 +125,13 @@ class ScheduleSessionScreen extends StatelessWidget {
   void _showTermsAndCondtionBottomSheet(BuildContext context) => showModalBottomSheet(
         barrierColor: Palette.black.withOpacity(0.8),
         context: context,
-        builder: (_) => const TermsAndConditionSheet(),
+        builder: (_) => TermsAndConditionSheet(
+          onLoading: () {
+            Future.delayed(
+              const Duration(seconds: 1),
+              () => context.navigator.pushNamed(InvitationSentScreen.routeName),
+            );
+          },
+        ),
       );
 }

@@ -8,6 +8,7 @@ class UserProfile extends StatelessWidget {
     this.name = 'Sarah Chu',
     this.email = '@sarah.sports',
     this.workPosition = 'Personal Trainer',
+    this.textColor,
     super.key,
   });
 
@@ -15,6 +16,7 @@ class UserProfile extends StatelessWidget {
   final String name;
   final String email;
   final String workPosition;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +37,12 @@ class UserProfile extends StatelessWidget {
           children: [
             Text(
               name,
-              style: textTheme.bodyLarge,
+              style: textTheme.bodyLarge?.copyWith(color: textColor),
             ),
             Text(
               email,
               style: textTheme.bodyLarge?.copyWith(
+                color: textColor,
                 fontSize: 11.0,
                 fontWeight: FontWeight.w300,
               ),
@@ -47,6 +50,7 @@ class UserProfile extends StatelessWidget {
             Text(
               workPosition,
               style: textTheme.bodyLarge?.copyWith(
+                color: textColor,
                 fontSize: 11.0,
                 fontWeight: FontWeight.w300,
               ),
