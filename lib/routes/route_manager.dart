@@ -16,6 +16,8 @@ class RouteManager {
             selectedDate: args as DateTime,
           ),
         );
+      case ScheduleSessionScreen.routeName:
+        return MaterialPageRoute(builder: (_) => const ScheduleSessionScreen());
       default:
         return throw Exception('Error 404');
     }

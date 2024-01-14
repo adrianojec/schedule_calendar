@@ -9,11 +9,13 @@ class EventTile extends StatelessWidget {
   const EventTile({
     required this.event,
     this.onPressed,
+    this.eventDate,
     super.key,
   });
 
   final ScheduleEvent event;
   final VoidCallback? onPressed;
+  final Widget? eventDate;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class EventTile extends StatelessWidget {
             const HorizontalSpace(16.0),
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,34 +87,26 @@ class EventTile extends StatelessWidget {
                           )
                         ],
                       ),
-                      GestureDetector(
-                        onTap: onPressed,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8.0,
-                            horizontal: 16.0,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: Palette.matGreen,
-                          ),
-                          child: Text(
-                            '${event.duration} mins',
-                            style: textTheme.bodyLarge?.copyWith(
-                              color: Palette.blancoWhite,
-                            ),
-                          ),
+                      ScheduleCalendarButton(
+                        text: '${event.duration} mins',
+                        buttonColor: Palette.matGreen,
+                        textStyle: textTheme.bodyLarge?.copyWith(color: Palette.white),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 12.0,
                         ),
+                        onTap: onPressed,
                       ),
                     ],
                   ),
                   const VerticalSpace(7.0),
-                  Text(
-                    event.description,
-                    style: textTheme.bodySmall,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                  eventDate ??
+                      Text(
+                        event.description,
+                        style: textTheme.bodySmall,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                 ],
               ),
             ),

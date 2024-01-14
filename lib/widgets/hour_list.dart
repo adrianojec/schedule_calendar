@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/data/model/event_time.dart';
+import 'package:schedule_calendar/screens/screens.dart';
+import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
 
 class HourList extends StatefulWidget {
@@ -55,7 +57,7 @@ class _HourListState extends State<HourList> {
                 child: ScheduleCalendarButton(
                   text: next,
                   buttonColor: Palette.blackPanther,
-                  onTap: () {},
+                  onTap: _navigateToScheduleSessionScreen,
                 ),
               ),
             ],
@@ -66,4 +68,6 @@ class _HourListState extends State<HourList> {
   }
 
   void _onSelectTime(EventTime? time) => setState(() => selectedHour = time);
+
+  void _navigateToScheduleSessionScreen() => context.navigator.pushNamed(ScheduleSessionScreen.routeName);
 }
