@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:schedule_calendar/constants/constants.dart';
+import 'package:schedule_calendar/screens/screens.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
 
@@ -29,16 +30,19 @@ class InvitationSentScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: _closeButtonSize,
-                width: _closeButtonSize,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Palette.white,
-                ),
-                child: const Icon(
-                  Icons.close,
-                  color: Palette.lushGreen,
+              GestureDetector(
+                onTap: () => _navigateToHomeScreen(context),
+                child: Container(
+                  height: _closeButtonSize,
+                  width: _closeButtonSize,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Palette.white,
+                  ),
+                  child: const Icon(
+                    Icons.close,
+                    color: Palette.lushGreen,
+                  ),
                 ),
               ),
               const VerticalSpace(45.0),
@@ -128,7 +132,7 @@ class InvitationSentScreen extends StatelessWidget {
                 width: size.width,
                 padding: const EdgeInsets.only(top: 32.0),
                 child: InkWell(
-                  onTap: context.navigator.pop,
+                  onTap: () => _navigateToHomeScreen(context),
                   child: Text(
                     done,
                     textAlign: TextAlign.center,
@@ -145,4 +149,9 @@ class InvitationSentScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _navigateToHomeScreen(BuildContext context) => context.navigator.pushNamedAndRemoveUntil(
+        HomeScreen.routeName,
+        (route) => false,
+      );
 }

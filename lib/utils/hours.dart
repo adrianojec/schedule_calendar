@@ -1,4 +1,4 @@
-import 'package:schedule_calendar/data/model/event_time.dart';
+import 'package:schedule_calendar/models/event_time.dart';
 
 List<EventTime> hours() {
   final hours = <EventTime>[];

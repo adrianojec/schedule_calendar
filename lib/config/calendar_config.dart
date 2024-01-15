@@ -4,6 +4,8 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../constants/constants.dart';
 
+// Consists of [TextStyle] and [BoxDecoration] that matches the design
+
 class CalendarConfig {
   final TextTheme textTheme;
 
