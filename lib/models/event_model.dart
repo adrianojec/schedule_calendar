@@ -5,7 +5,7 @@ class EventModel {
   String description;
   String type;
   String sessionType;
-  int durationByMinutes;
+  int durationInMinutes;
   List<String> coachId;
   List<String> idFromCoachId;
 
@@ -16,7 +16,7 @@ class EventModel {
     required this.description,
     required this.type,
     required this.sessionType,
-    required this.durationByMinutes,
+    required this.durationInMinutes,
     required this.coachId,
     required this.idFromCoachId,
   });
@@ -28,7 +28,7 @@ class EventModel {
         description: json["description"],
         type: json["type"],
         sessionType: json["sessionType"],
-        durationByMinutes: json["durationByMinutes"],
+        durationInMinutes: json["durationByMinutes"],
         coachId: List<String>.from(json["coachId"].map((coachId) => coachId)),
         idFromCoachId: List<String>.from(json["id (from CoachId)"].map((id) => id)),
       );

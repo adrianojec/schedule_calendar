@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:schedule_calendar/bloc/events/events_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
@@ -24,56 +26,59 @@ class EventScreenView extends StatelessWidget {
           left: 26.0,
           right: 26.0,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Hero(
-              tag: 'AppBarTitle',
-              child: Text(
-                'Privater Training Sessions',
-                style: textTheme.labelLarge,
-              ),
-            ),
-            const VerticalSpace(16.0),
-            Hero(
-              tag: 'EventInfoRow',
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SquareButton(
-                    title: SvgPicture.asset(personWalkingIcon),
-                    subtitle: EventType.inperson.name,
-                    tooltipMessage: locationTooltipMessage,
+        child: BlocBuilder<EventsBloc, EventsState>(
+          builder: (context, state) {
+            final event = (state as EventsSuccess).selectedEvent;
+            final isMultipleSession = event?.sessionType == 'Multiple';
+            final isInPerson = event?.type == 'In-Person';
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Hero(
+                  tag: 'AppBarTitle',
+                  child: Text(
+                    '${event?.title}',
+                    style: textTheme.labelLarge,
                   ),
-                  SquareButton(
-                    title: SvgPicture.asset(clockIcon),
-                    subtitle: '120 mins',
-                    tooltipMessage: durationTooltipMessage,
-                  ),
-                  Builder(builder: (context) {
-                    return SquareButton(
-                      title: Text(
-                        '+1',
-                        style: textTheme.headlineLarge?.copyWith(
-                          color: Palette.ashGrey,
-                          fontWeight: FontWeight.w600,
-                        ),
+                ),
+                const VerticalSpace(16.0),
+                Hero(
+                  tag: 'EventInfoRow',
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SquareButton(
+                        title: SvgPicture.asset(isInPerson ? personWalkingIcon : callIcon),
+                        subtitle: '${event?.type}',
+                        tooltipMessage: isMultipleSession ? locationTooltipMessage : null,
                       ),
-                      subtitle: SessionType.multiple.name,
-                      tooltipMessage: sessionTooltipMessage,
-                    );
-                  }),
-                ],
-              ),
-            ),
-            const VerticalSpace(16.0),
-            const EllipsisText(
-              text:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            ),
-            const VerticalSpace(16.0),
-            if (contents != null) ...contents!,
-          ],
+                      SquareButton(
+                        title: SvgPicture.asset(clockIcon),
+                        subtitle: '${event?.durationInMinutes} mins',
+                        tooltipMessage: durationTooltipMessage,
+                      ),
+                      SquareButton(
+                        title: Text(
+                          isMultipleSession ? '+1' : '1',
+                          style: textTheme.headlineLarge?.copyWith(
+                            color: Palette.ashGrey,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: isMultipleSession ? '${event?.sessionType}' : session,
+                        tooltipMessage: isMultipleSession ? locationTooltipMessage : null,
+                      ),
+                    ],
+                  ),
+                ),
+                const VerticalSpace(16.0),
+                EllipsisText(text: '${event?.description}'),
+                const VerticalSpace(16.0),
+                if (contents != null) ...contents!,
+              ],
+            );
+          },
         ),
       ),
     );

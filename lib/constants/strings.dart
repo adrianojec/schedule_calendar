@@ -5,6 +5,7 @@ const imagePath = 'assets/images';
 // Icons
 const backIcon = '$iconPath/back.svg';
 const calendarIcon = '$iconPath/calendar.svg';
+const callIcon = '$iconPath/call.svg';
 const clockIcon = '$iconPath/clock.svg';
 const expandIcon = '$iconPath/expand.svg';
 const globeIcon = '$iconPath/globe.svg';
@@ -29,6 +30,7 @@ const readMore = '  ... read more';
 const records = 'records';
 const scheduleEvent = 'Schedule Events';
 const scheduleSessionFor60 = 'Schedule sessions for \$60';
+const session = 'Session';
 const sessionTooltipMessage = 'You may book multiple sessions.';
 const seeMore = 'See more...';
 const selectADay = 'Select a day';

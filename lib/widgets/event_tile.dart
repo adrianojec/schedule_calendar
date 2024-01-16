@@ -96,7 +96,7 @@ class EventTile extends StatelessWidget {
                         ],
                       ),
                       ScheduleCalendarButton(
-                        text: '${event.durationByMinutes} mins',
+                        text: '${event.durationInMinutes} mins',
                         buttonColor: Palette.matGreen,
                         textStyle: textTheme.bodyLarge?.copyWith(color: Palette.white),
                         padding: const EdgeInsets.symmetric(

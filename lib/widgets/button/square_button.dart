@@ -23,49 +23,45 @@ class SquareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = context.appTheme.textTheme;
     final controller = SuperTooltipController();
+    final tooltipContainerColor = tooltipMessage == null ? Colors.transparent : const Color(0xFFD9D9D9);
 
-    return GestureDetector(
-      onTap: () async {
-        await controller.showTooltip();
-      },
-      child: SuperTooltip(
-        controller: controller,
-        arrowTipDistance: 40.0,
-        arrowBaseWidth: 14,
-        arrowLength: 7,
-        backgroundColor: const Color(0xFFD9D9D9),
-        borderColor: const Color(0xFFD9D9D9),
-        barrierColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        content: Text(
-          tooltipMessage ?? emptyString,
-          style: textTheme.bodyLarge?.copyWith(
-            fontSize: 11.0,
-            fontWeight: FontWeight.w300,
-          ),
+    return SuperTooltip(
+      controller: controller,
+      arrowTipDistance: 40.0,
+      arrowBaseWidth: 14,
+      arrowLength: 7,
+      backgroundColor: tooltipContainerColor,
+      borderColor: tooltipContainerColor,
+      barrierColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+      content: Text(
+        tooltipMessage ?? emptyString,
+        style: textTheme.bodyLarge?.copyWith(
+          fontSize: 11.0,
+          fontWeight: FontWeight.w300,
         ),
-        child: Container(
-          height: _buttonSize,
-          width: _buttonSize,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-            color: Palette.muteGrey,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (title != null) title!,
-              const VerticalSpace(4.0),
-              Text(
-                subtitle ?? emptyString,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: Palette.ashGrey,
-                  fontSize: 11.0,
-                  fontWeight: FontWeight.w400,
-                ),
-              )
-            ],
-          ),
+      ),
+      child: Container(
+        height: _buttonSize,
+        width: _buttonSize,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          color: Palette.muteGrey,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (title != null) title!,
+            const VerticalSpace(4.0),
+            Text(
+              subtitle ?? emptyString,
+              style: textTheme.bodyLarge?.copyWith(
+                color: Palette.ashGrey,
+                fontSize: 11.0,
+                fontWeight: FontWeight.w400,
+              ),
+            )
+          ],
         ),
       ),
     );
