@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule_calendar/bloc/coach/coach_bloc.dart';
+import 'package:schedule_calendar/constants/strings.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/spacer/horizontal_space.dart';
 
@@ -22,42 +25,52 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = context.appTheme.textTheme;
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 24.0,
-          backgroundImage: AssetImage(imageUrl),
-        ),
-        const HorizontalSpace(13.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
+    return BlocBuilder<CoachBloc, CoachState>(
+      builder: (context, state) {
+        if (state is! CoachSuccess) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final coach = state.coach;
+
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              name,
-              style: textTheme.bodyLarge?.copyWith(color: textColor),
+            CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: 24.0,
+              backgroundImage: NetworkImage(coach.imageUrl ?? userImage),
             ),
-            Text(
-              email,
-              style: textTheme.bodyLarge?.copyWith(
-                color: textColor,
-                fontSize: 11.0,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            Text(
-              workPosition,
-              style: textTheme.bodyLarge?.copyWith(
-                color: textColor,
-                fontSize: 11.0,
-                fontWeight: FontWeight.w300,
-              ),
+            const HorizontalSpace(13.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  '${coach.firstName} ${coach.lastName} ',
+                  style: textTheme.bodyLarge?.copyWith(color: textColor),
+                ),
+                Text(
+                  '@${coach.userName}',
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: textColor,
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                Text(
+                  '${coach.role}',
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: textColor,
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

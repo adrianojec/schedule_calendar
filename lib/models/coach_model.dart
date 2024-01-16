@@ -15,12 +15,12 @@ class CoachModel {
     this.imageUrl,
   });
 
-  CoachModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userName = json['fields']['userName'];
-    firstName = json['fields']['firstName'];
-    lastName = json['fields']['lastName'];
-    role = json['fields']['role'];
-    imageUrl = json['fields']['imageUrl'];
-  }
+  factory CoachModel.fromJson(Map<String, dynamic> json) => CoachModel(
+        id: json['coachId'],
+        userName: json['userName'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        role: json['role'],
+        imageUrl: json['imageUrl'],
+      );
 }

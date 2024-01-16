@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:schedule_calendar/constants/constants.dart';
-import 'package:schedule_calendar/data/mock/event_data.dart';
+import 'package:schedule_calendar/mock_data/event_data.dart';
 import 'package:schedule_calendar/screens/screens.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';

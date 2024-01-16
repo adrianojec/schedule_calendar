@@ -17,13 +17,13 @@ class EventModel {
     this.imageUrl,
   });
 
-  EventModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    coachId = json['fields']['coachId'].cast<String>();
-    title = json['fields']['title'];
-    type = json['fields']['type'];
-    durationByMinutes = json['fields']['durationByMinutes'];
-    sessionType = json['fields']['sessionType'];
-    imageUrl = json['fields']['imageUrl'];
-  }
+  factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
+        id: json['id'],
+        coachId: json['fields']['coachId'].cast<String>(),
+        title: json['fields']['title'],
+        type: json['fields']['type'],
+        durationByMinutes: json['fields']['durationByMinutes'],
+        sessionType: json['fields']['sessionType'],
+        imageUrl: json['fields']['imageUrl'],
+      );
 }
