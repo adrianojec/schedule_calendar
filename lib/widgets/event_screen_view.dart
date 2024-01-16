@@ -5,6 +5,7 @@ import 'package:schedule_calendar/bloc/events/events_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
+import 'package:schedule_calendar/utils/extensions.dart';
 
 class EventScreenView extends StatelessWidget {
   const EventScreenView({
@@ -30,7 +31,6 @@ class EventScreenView extends StatelessWidget {
           builder: (context, state) {
             final event = (state as EventsSuccess).selectedEvent;
             final isMultipleSession = event?.sessionType == 'Multiple';
-            final isInPerson = event?.type == 'In-Person';
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,13 +49,13 @@ class EventScreenView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SquareButton(
-                        title: SvgPicture.asset(isInPerson ? personWalkingIcon : callIcon),
+                        title: SvgPicture.asset(event?.icon ?? personWalkingIcon),
                         subtitle: '${event?.type}',
                         tooltipMessage: isMultipleSession ? locationTooltipMessage : null,
                       ),
                       SquareButton(
                         title: SvgPicture.asset(clockIcon),
-                        subtitle: '${event?.durationInMinutes} mins',
+                        subtitle: '${event?.formattedDuration}',
                         tooltipMessage: durationTooltipMessage,
                       ),
                       SquareButton(
@@ -66,7 +66,7 @@ class EventScreenView extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        subtitle: isMultipleSession ? '${event?.sessionType}' : session,
+                        subtitle: '${event?.formattedType}',
                         tooltipMessage: isMultipleSession ? locationTooltipMessage : null,
                       ),
                     ],

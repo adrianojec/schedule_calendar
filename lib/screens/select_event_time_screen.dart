@@ -29,7 +29,6 @@ class SelectEventTimeScreen extends StatelessWidget {
       builder: (context, state) {
         final event = (state as EventsSuccess).selectedEvent;
         final isMultipleSession = event?.sessionType == 'Multiple';
-        final isInPerson = event?.type == 'In-Person';
 
         return Scaffold(
           appBar: SchedulCalendarAppBar(
@@ -59,13 +58,13 @@ class SelectEventTimeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SquareButton(
-                        title: SvgPicture.asset(isInPerson ? personWalkingIcon : callIcon),
+                        title: SvgPicture.asset(event?.icon ?? personWalkingIcon),
                         subtitle: '${event?.type}',
                         tooltipMessage: isMultipleSession ? locationTooltipMessage : null,
                       ),
                       SquareButton(
                         title: SvgPicture.asset(clockIcon),
-                        subtitle: '${event?.durationInMinutes} mins',
+                        subtitle: '${event?.formattedDuration}',
                         tooltipMessage: durationTooltipMessage,
                       ),
                       SquareButton(
@@ -76,7 +75,7 @@ class SelectEventTimeScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        subtitle: isMultipleSession ? '${event?.sessionType}' : 'Session',
+                        subtitle: '${event?.formattedType}',
                         tooltipMessage: isMultipleSession ? locationTooltipMessage : null,
                       ),
                     ],

@@ -22,7 +22,7 @@ class EventTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = context.appTheme.textTheme;
-    final isCallType = event.type == EventType.call.name;
+    final isCallType = event.type == 'Call';
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8.0),

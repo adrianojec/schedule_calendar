@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_calendar/constants/strings.dart';
-import 'package:schedule_calendar/utils/utils.dart';
+import 'package:schedule_calendar/constants/constants.dart';
+import 'package:schedule_calendar/models/models.dart';
 
 // BuildContext
 extension ContextExt on BuildContext {
@@ -9,33 +9,22 @@ extension ContextExt on BuildContext {
   ThemeData get appTheme => Theme.of(this);
 }
 
-// EventType
-extension EventTypeExt on EventType {
-  static const _strings = {
-    EventType.inperson: 'In-Person',
-    EventType.call: 'Call',
-  };
-
-  String get name => _strings[this] ?? emptyString;
-}
-
-// SessionType
-extension SessionTypeExt on SessionType {
-  static const _strings = {
-    SessionType.multiple: 'Multiple',
-    SessionType.single: 'Session',
-  };
-
-  String get name => _strings[this] ?? emptyString;
-}
-
 // DateTime
 extension DateTimeExt on DateTime {
   DateTime get withoutTime => DateTime(year, month, day);
 }
 
 // Int
-
 extension IntWithDurationExt on int {
   Duration get year => Duration(days: this * 365);
+}
+
+// Event Model
+extension EventModelExt on EventModel {
+  bool get _isMultipleSession => sessionType == "Multiple";
+  bool get _isInPerson => type == "In-Person";
+
+  String get icon => _isInPerson ? personWalkingIcon : callIcon;
+  String get formattedDuration => '$durationInMinutes mins';
+  String get formattedType => _isMultipleSession ? sessionType : session;
 }
