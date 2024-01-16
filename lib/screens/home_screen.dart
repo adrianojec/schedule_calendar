@@ -111,7 +111,11 @@ class HomeScreen extends StatelessWidget {
                   const VerticalSpace(26.0),
                   BlocBuilder<EventsBloc, EventsState>(
                     builder: (context, state) {
-                      if (state is! EventsSuccess) return const SizedBox();
+                      if (state is! EventsSuccess) {
+                        return Column(
+                          children: List.generate(3, (index) => const LoadingEventTile()),
+                        );
+                      }
 
                       final events = state.events;
 
