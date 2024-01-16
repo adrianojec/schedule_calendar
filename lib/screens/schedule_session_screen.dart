@@ -60,23 +60,23 @@ class ScheduleSessionScreen extends StatelessWidget {
           ),
         ),
         const VerticalSpace(14.0),
-        EventTile(
-          event: events[0],
-          eventDate: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Thursday, 18 March, 2024',
-                style: textTheme.bodySmall,
-              ),
-              const VerticalSpace(8.0),
-              Text(
-                '14:00 - 16:00',
-                style: textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
+        // EventTile(
+        //   event: events[0],
+        //   eventDate: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(
+        //         'Thursday, 18 March, 2024',
+        //         style: textTheme.bodySmall,
+        //       ),
+        //       const VerticalSpace(8.0),
+        //       Text(
+        //         '14:00 - 16:00',
+        //         style: textTheme.bodySmall,
+        //       ),
+        //     ],
+        //   ),
+        // ),
         const Spacer(),
         SafeArea(
           child: Center(

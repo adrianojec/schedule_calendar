@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_calendar/bloc/coach/coach_bloc.dart';
 import 'package:schedule_calendar/constants/strings.dart';
 import 'package:schedule_calendar/utils/utils.dart';
-import 'package:schedule_calendar/widgets/spacer/horizontal_space.dart';
+import 'package:schedule_calendar/widgets/widgets.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({
@@ -27,9 +27,7 @@ class UserProfile extends StatelessWidget {
 
     return BlocBuilder<CoachBloc, CoachState>(
       builder: (context, state) {
-        if (state is! CoachSuccess) {
-          return const Center(child: CircularProgressIndicator());
-        }
+        if (state is! CoachSuccess) return const LoadingUserProfile();
 
         final coach = state.coach;
 

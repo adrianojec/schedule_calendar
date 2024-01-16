@@ -16,3 +16,6 @@ class Palette {
   static const Color mistyGrey = Color(0xFFBDBDBD);
   static const Color white = Colors.white;
 }
+
+final Color loadingBaseColor = Palette.ashGrey.withOpacity(0.1);
+final Color loadingHighlightColor = Palette.ashGrey.withOpacity(0.2);

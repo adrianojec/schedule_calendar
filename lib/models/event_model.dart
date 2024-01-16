@@ -1,29 +1,35 @@
 class EventModel {
-  String? id;
-  List<String>? coachId;
-  String? title;
-  String? type;
-  int? durationByMinutes;
-  String? sessionType;
-  String? imageUrl;
+  String id;
+  String imageUrl;
+  String title;
+  String description;
+  String type;
+  String sessionType;
+  int durationByMinutes;
+  List<String> coachId;
+  List<String> idFromCoachId;
 
   EventModel({
-    this.id,
-    this.coachId,
-    this.title,
-    this.type,
-    this.durationByMinutes,
-    this.sessionType,
-    this.imageUrl,
+    required this.id,
+    required this.imageUrl,
+    required this.title,
+    required this.description,
+    required this.type,
+    required this.sessionType,
+    required this.durationByMinutes,
+    required this.coachId,
+    required this.idFromCoachId,
   });
 
   factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
-        id: json['id'],
-        coachId: json['fields']['coachId'].cast<String>(),
-        title: json['fields']['title'],
-        type: json['fields']['type'],
-        durationByMinutes: json['fields']['durationByMinutes'],
-        sessionType: json['fields']['sessionType'],
-        imageUrl: json['fields']['imageUrl'],
+        id: json["eventId"],
+        imageUrl: json["imageUrl"],
+        title: json["title"],
+        description: json["description"],
+        type: json["type"],
+        sessionType: json["sessionType"],
+        durationByMinutes: json["durationByMinutes"],
+        coachId: List<String>.from(json["coachId"].map((coachId) => coachId)),
+        idFromCoachId: List<String>.from(json["id (from CoachId)"].map((id) => id)),
       );
 }

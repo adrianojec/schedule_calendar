@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_calendar/models/schedule_event.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule_calendar/bloc/coach/coach_bloc.dart';
+import 'package:schedule_calendar/constants/constants.dart';
+import 'package:schedule_calendar/models/event_model.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 
-import '../constants/constants.dart';
 import 'widgets.dart';
 
 class EventTile extends StatelessWidget {
@@ -13,14 +15,14 @@ class EventTile extends StatelessWidget {
     super.key,
   });
 
-  final ScheduleEvent event;
+  final EventModel event;
   final VoidCallback? onPressed;
   final Widget? eventDate;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = context.appTheme.textTheme;
-    final isCallType = event.type == EventType.call;
+    final isCallType = event.type == EventType.call.name;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8.0),
@@ -40,7 +42,7 @@ class EventTile extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: 24.0,
-              backgroundImage: AssetImage(event.imageUrl),
+              backgroundImage: NetworkImage(event.imageUrl),
             ),
             const HorizontalSpace(16.0),
             Expanded(
@@ -63,14 +65,20 @@ class EventTile extends StatelessWidget {
                           const VerticalSpace(4.0),
                           Row(
                             children: [
-                              Text(
-                                event.userRole,
-                                style: textTheme.bodyLarge?.copyWith(
-                                  color: Palette.blackPanther,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: -0.2,
-                                ),
+                              BlocBuilder<CoachBloc, CoachState>(
+                                builder: (context, state) {
+                                  if (state is! CoachSuccess) return const SizedBox();
+
+                                  return Text(
+                                    state.coach.role ?? emptyString,
+                                    style: textTheme.bodyLarge?.copyWith(
+                                      color: Palette.blackPanther,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.2,
+                                    ),
+                                  );
+                                },
                               ),
                               const HorizontalSpace(8.0),
                               EventTypeChip(
@@ -81,14 +89,14 @@ class EventTile extends StatelessWidget {
                                         size: 11.0,
                                       )
                                     : null,
-                                text: event.type.name,
-                              )
+                                text: event.type,
+                              ),
                             ],
                           )
                         ],
                       ),
                       ScheduleCalendarButton(
-                        text: '${event.duration} mins',
+                        text: '${event.durationByMinutes} mins',
                         buttonColor: Palette.matGreen,
                         textStyle: textTheme.bodyLarge?.copyWith(color: Palette.white),
                         padding: const EdgeInsets.symmetric(

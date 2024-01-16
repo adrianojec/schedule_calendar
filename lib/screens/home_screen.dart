@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:schedule_calendar/bloc/coach/coach_bloc.dart';
+import 'package:schedule_calendar/bloc/events/events_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
-import 'package:schedule_calendar/mock_data/event_data.dart';
 import 'package:schedule_calendar/screens/select_event_date_screen.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
@@ -96,22 +98,37 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Sarah's Calendar",
-                    style: textTheme.titleLarge,
+                  BlocBuilder<CoachBloc, CoachState>(
+                    builder: (context, state) {
+                      if (state is! CoachSuccess) return const SizedBox();
+
+                      return Text(
+                        "${state.coach.firstName}'s Calendar",
+                        style: textTheme.titleLarge,
+                      );
+                    },
                   ),
                   const VerticalSpace(26.0),
-                  ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemCount: events.length,
-                    itemBuilder: (_, index) => EventTile(
-                      event: events[index],
-                      onPressed: () {
-                        context.navigator.pop();
-                        context.navigator.pushNamed(SelectEventDateScreen.routeName);
-                      },
-                    ),
+                  BlocBuilder<EventsBloc, EventsState>(
+                    builder: (context, state) {
+                      if (state is! EventsSuccess) return const SizedBox();
+
+                      final events = state.events;
+
+                      return ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: events.length,
+                        itemBuilder: (_, index) => EventTile(
+                          event: events[index],
+                          onPressed: () {
+                            context.read<EventsBloc>().add(EventSelected(events[index]));
+                            context.navigator.pop();
+                            context.navigator.pushNamed(SelectEventDateScreen.routeName);
+                          },
+                        ),
+                      );
+                    },
                   ),
                   Center(
                     child: TextButton(

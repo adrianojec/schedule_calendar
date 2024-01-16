@@ -14,6 +14,7 @@ export 'event_screen_view.dart';
 export 'event_tile.dart';
 export 'event_type_chip.dart';
 export 'hour_list.dart';
+export 'loading_widgets/loading_user_profile.dart';
 export 'schedule_calendar_app_bar.dart';
 export 'schedule_calendar_bottom_sheet.dart';
 export 'user_profile.dart';

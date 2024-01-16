@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/models/models.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,7 @@ class AirtableService {
 
     final result = json.decode(response.body);
 
-    final coaches = (result['records'] as List).map((coach) => CoachModel.fromJson(coach['fields'])).toList();
+    final coaches = (result[records] as List).map((coach) => CoachModel.fromJson(coach[fields])).toList();
 
     return coaches;
   }
@@ -34,7 +35,7 @@ class AirtableService {
 
     final result = json.decode(response.body);
 
-    final events = (result['records'] as List).map((event) => EventModel.fromJson(event)).toList();
+    final events = (result[records] as List).map((event) => EventModel.fromJson(event[fields])).toList();
 
     return events;
   }
