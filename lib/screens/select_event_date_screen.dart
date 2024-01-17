@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:schedule_calendar/bloc/schedules/schedules_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/screens/screens.dart';
@@ -26,15 +27,20 @@ class SelectEventDateScreen extends StatelessWidget {
         Expanded(
           child: BlocBuilder<SchedulesBloc, SchedulesState>(
             builder: (context, state) {
-              if (state is! SchedulesSuccess) return const SizedBox();
+              if (state is! SchedulesSuccess) return const Center(child: CircularProgressIndicator.adaptive());
 
-              final schedules = state.schedules;
+              final scheduleDates = state.schedules.map((e) => DateFormat(dateFormat).format(e.date)).toList();
 
               return Calendar(
-                onDaySelected: (selectedDay, _) => context.navigator.pushNamed(
-                  SelectEventTimeScreen.routeName,
-                  arguments: selectedDay,
-                ),
+                scheduledDates: scheduleDates,
+                onDaySelected: (selectedDay, _) {
+                  if (scheduleDates.contains(DateFormat(dateFormat).format(selectedDay))) return;
+
+                  context.navigator.pushNamed(
+                    SelectEventTimeScreen.routeName,
+                    arguments: selectedDay,
+                  );
+                },
               );
             },
           ),

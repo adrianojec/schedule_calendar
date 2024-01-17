@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:schedule_calendar/bloc/events/events_bloc.dart';
+import 'package:schedule_calendar/bloc/schedules/schedules_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/utils/hours.dart';
 import 'package:schedule_calendar/utils/utils.dart';
@@ -143,7 +144,17 @@ class SelectEventTimeScreen extends StatelessWidget {
                 Expanded(
                   child: SizedBox(
                     width: size.width * 0.6,
-                    child: HourList(hours: event?.durationInMinutes == 30 ? hoursWith30minutes() : hours()),
+                    child: BlocBuilder<SchedulesBloc, SchedulesState>(
+                      builder: (context, state) {
+                        if (state is! SchedulesSuccess) return const SizedBox();
+
+                        return HourList(
+                          hours: event?.durationInMinutes == 30
+                              ? hoursWith30minutes(state.schedules)
+                              : hours(state.schedules),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],

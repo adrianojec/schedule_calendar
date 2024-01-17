@@ -42,3 +42,6 @@ const termsAndConditionsMessage =
 const viewYourCalendar = 'View your calendar';
 const writeANote = 'Write a note to share anything that will\n help prepare for our session.';
 const writeMessage = 'Write a message';
+
+// Date Format
+const dateFormat = 'yyyy-MM-dd';

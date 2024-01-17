@@ -1,8 +1,10 @@
-class EventTime {
+import 'package:equatable/equatable.dart';
+
+class EventTime extends Equatable {
   final int hour;
   final int minute;
 
-  EventTime({
+  const EventTime({
     required this.hour,
     required this.minute,
   });
@@ -20,4 +22,7 @@ class EventTime {
 
   @override
   String toString() => '$hour:${minute.toString().padRight(2, '0')}';
+
+  @override
+  List<Object?> get props => [hour, minute];
 }
