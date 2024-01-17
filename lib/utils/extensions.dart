@@ -14,9 +14,9 @@ extension DateTimeExt on DateTime {
   DateTime get withoutTime => DateTime(year, month, day);
 }
 
-// Int
-extension IntWithDurationExt on int {
-  Duration get year => Duration(days: this * 365);
+// Duration
+extension DurationExt on Duration {
+  String get formattedTime => ('$inHours:${inMinutes.remainder(60)}').padRight(5, '0');
 }
 
 // Event Model
@@ -27,4 +27,11 @@ extension EventModelExt on EventModel {
   String get icon => _isInPerson ? personWalkingIcon : callIcon;
   String get formattedDuration => '$durationInMinutes mins';
   String get formattedType => _isMultipleSession ? sessionType : session;
+}
+
+// Int
+extension IntWithDurationExt on int {
+  Duration get year => Duration(days: this * 365);
+  Duration get hours => Duration(hours: this);
+  Duration get minutes => Duration(minutes: this);
 }

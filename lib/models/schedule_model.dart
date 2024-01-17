@@ -1,13 +1,12 @@
 import 'package:intl/intl.dart';
 import 'package:schedule_calendar/constants/constants.dart';
-import 'package:schedule_calendar/models/models.dart';
 
 class ScheduleModel {
   final String? id;
   final String notes;
   final DateTime date;
-  final EventTime startTime;
-  final EventTime endTime;
+  final Duration startTime;
+  final Duration endTime;
   final String eventId;
   final int durationByMinutes;
 
@@ -21,15 +20,20 @@ class ScheduleModel {
     required this.durationByMinutes,
   });
 
-  factory ScheduleModel.fromJson(Map<String, dynamic> json) => ScheduleModel(
-        id: json['id'],
-        notes: json["fields"]["notes"],
-        date: DateTime.parse(json["fields"]["date"]),
-        startTime: EventTime.fromString(json["fields"]["startTime"]),
-        endTime: EventTime.fromString(json["fields"]["endTime"]),
-        eventId: json["fields"]["eventId"].first,
-        durationByMinutes: json["fields"]["durationByMinutes (from eventId)"].first,
-      );
+  factory ScheduleModel.fromJson(Map<String, dynamic> json) {
+    final startTime = json["fields"]["startTime"].split(":");
+    final endTime = json["fields"]["endTime"].split(":");
+
+    return ScheduleModel(
+      id: json['id'],
+      notes: json["fields"]["notes"],
+      date: DateTime.parse(json["fields"]["date"]),
+      startTime: Duration(hours: int.parse(startTime.first), minutes: int.parse(startTime.last)),
+      endTime: Duration(hours: int.parse(endTime.first), minutes: int.parse(endTime.last)),
+      eventId: json["fields"]["eventId"].first,
+      durationByMinutes: json["fields"]["durationByMinutes (from eventId)"].first,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "notes": notes,

@@ -1,7 +1,8 @@
 import 'package:schedule_calendar/models/models.dart';
+import 'package:schedule_calendar/utils/utils.dart';
 
-List<EventTime> hours(List<ScheduleModel> scheduledTimes) {
-  final hours = <EventTime>[];
+List<Duration> hours(List<ScheduleModel> scheduledTimes) {
+  final hours = <Duration>[];
   final hoursWithDuration = scheduledTimes
       .map((e) => {
             "startTime": e.startTime,
@@ -10,7 +11,7 @@ List<EventTime> hours(List<ScheduleModel> scheduledTimes) {
       .toList();
 
   for (int index = 8; index <= 20; index++) {
-    final hour = EventTime(hour: index, minute: 0);
+    final hour = index.hours;
     final shouldSkip2Hours = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 120);
     final shouldSkip1Hours = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 60);
     final shouldSkip30mins = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 30);
@@ -30,7 +31,7 @@ List<EventTime> hours(List<ScheduleModel> scheduledTimes) {
   return hours;
 }
 
-List<EventTime> hoursWith30minutes(List<ScheduleModel> scheduledTimes) {
+List<Duration> hoursWith30minutes(List<ScheduleModel> scheduledTimes) {
   final hoursWithDuration = scheduledTimes
       .map((e) => {
             "startTime": e.startTime,
@@ -38,13 +39,13 @@ List<EventTime> hoursWith30minutes(List<ScheduleModel> scheduledTimes) {
           })
       .toList();
   final remainingHours = hours(scheduledTimes);
-  final availableHours = <EventTime>[];
+  final availableHours = <Duration>[];
 
   // This will add hours with [XX:30] format to the remaining hours from the method [hours()].
   // Then will check the hours with [XX:30] format from [remainingHours], if it exists, then it will be skipped
   // if not, [hour] or [with30mins] will be added in the [availableHours]
   for (final hour in remainingHours) {
-    final with30mins = EventTime(hour: hour.hour, minute: 30);
+    final with30mins = Duration(hours: hour.inHours, minutes: 30);
     final shouldSkip = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 30);
     final shouldSkip30mins = hoursWithDuration.any((hr) => hr["startTime"] == with30mins && hr["duration"] == 30);
 
