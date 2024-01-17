@@ -28,6 +28,7 @@ const next = 'Next';
 const readMore = '  ... read more';
 const records = 'records';
 const scheduleEvent = 'Schedule Events';
+const scheduleSession = 'Schedule session';
 const scheduleSessionFor60 = 'Schedule sessions for \$60';
 const session = 'Session';
 const sessionTooltipMessage = 'You may book multiple sessions.';

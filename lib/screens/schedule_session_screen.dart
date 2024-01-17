@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:schedule_calendar/bloc/events/events_bloc.dart';
+import 'package:schedule_calendar/bloc/schedules/schedules_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/screens/screens.dart';
 import 'package:schedule_calendar/utils/utils.dart';
@@ -15,81 +18,130 @@ class ScheduleSessionScreen extends StatelessWidget {
     final textTheme = context.appTheme.textTheme;
     final size = MediaQuery.of(context).size;
 
-    return EventScreenView(
-      contents: [
-        Center(
-          child: SizedBox(
-            width: size.width * 0.6,
-            child: const ScheduleCalendarButton(
-              text: addNewEvent,
-            ),
-          ),
-        ),
-        const VerticalSpace(16.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              scheduleEvent,
-              style: textTheme.labelLarge?.copyWith(color: Palette.blackPanther),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(globeIcon),
-                const HorizontalSpace(8.0),
-                Text(
-                  singaporeStandardTime,
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: Palette.ashGrey,
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.w300,
+    return BlocBuilder<EventsBloc, EventsState>(
+      builder: (context, state) {
+        if (state is! EventsSuccess) return const SizedBox();
+
+        final selectedEvent = state.selectedEvent;
+        final isMultipleSession = selectedEvent?.sessionType == 'Multiple';
+
+        return EventScreenView(
+          contents: [
+            if (isMultipleSession) ...[
+              Center(
+                child: SizedBox(
+                  width: size.width * 0.6,
+                  child: const ScheduleCalendarButton(
+                    text: addNewEvent,
                   ),
-                )
+                ),
+              ),
+            ],
+            const VerticalSpace(16.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  scheduleEvent,
+                  style: textTheme.labelLarge?.copyWith(color: Palette.blackPanther),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(globeIcon),
+                    const HorizontalSpace(8.0),
+                    Text(
+                      singaporeStandardTime,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: Palette.ashGrey,
+                        fontSize: 11.0,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
-        const VerticalSpace(16.0),
-        SizedBox(
-          width: size.width * 0.5,
-          child: RoundButton(
-            text: addNotes,
-            onTap: () => _showAddNotesBottomSheet(context),
-          ),
-        ),
-        const VerticalSpace(14.0),
-        // EventTile(
-        //   event: events[0],
-        //   eventDate: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text(
-        //         'Thursday, 18 March, 2024',
-        //         style: textTheme.bodySmall,
-        //       ),
-        //       const VerticalSpace(8.0),
-        //       Text(
-        //         '14:00 - 16:00',
-        //         style: textTheme.bodySmall,
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        const Spacer(),
-        SafeArea(
-          child: Center(
-            child: SizedBox(
-              width: size.width * 0.8,
-              child: ScheduleCalendarButton(
-                buttonColor: Palette.blackPanther,
-                text: scheduleSessionFor60,
-                onTap: () => _showTermsAndCondtionBottomSheet(context),
+            const VerticalSpace(16.0),
+            Expanded(
+              child: BlocBuilder<SchedulesBloc, SchedulesState>(
+                builder: (context, state) {
+                  if (state is! SchedulesSuccess) return const SizedBox();
+
+                  final schedulesToAdd = state.schedulesToAdd ?? [];
+                  final schedulesToAddLength = state.schedulesToAdd?.length ?? 0;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (schedulesToAdd.first.notes == emptyString)
+                        SizedBox(
+                          width: size.width * 0.5,
+                          child: RoundButton(
+                            text: addNotes,
+                            onTap: () => _showAddNotesBottomSheet(context),
+                          ),
+                        )
+                      else ...[
+                        Text(
+                          'Note from @sample.client',
+                          style: textTheme.bodyLarge?.copyWith(
+                            fontSize: 11.0,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        const VerticalSpace(8.0),
+                        EllipsisText(text: schedulesToAdd.first.notes),
+                      ],
+                      const VerticalSpace(14.0),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: schedulesToAdd.length,
+                        itemBuilder: (context, index) => EventTile(
+                          event: selectedEvent,
+                          eventDate: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                schedulesToAdd[index].formattedDate,
+                                style: textTheme.bodySmall,
+                              ),
+                              const VerticalSpace(8.0),
+                              Text(
+                                schedulesToAdd[index].formattedTime,
+                                style: textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      SafeArea(
+                        child: Center(
+                          child: SizedBox(
+                            width: size.width * 0.8,
+                            child: BlocBuilder<SchedulesBloc, SchedulesState>(
+                              builder: (context, state) {
+                                if (state is! SchedulesSuccess) return const SizedBox();
+
+                                return ScheduleCalendarButton(
+                                  buttonColor: Palette.blackPanther,
+                                  text: schedulesToAddLength >= 2 ? scheduleSessionFor60 : scheduleSession,
+                                  onTap: () => _showTermsAndCondtionBottomSheet(context),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
-          ),
-        )
-      ],
+          ],
+        );
+      },
     );
   }
 
@@ -102,18 +154,33 @@ class ScheduleSessionScreen extends StatelessWidget {
     showModalBottomSheet(
       barrierColor: Colors.transparent,
       context: context,
-      builder: (_) => StatefulBuilder(
+      builder: (context) => StatefulBuilder(
         builder: (_, setState) {
           final isHeightChanged = modalSheetHeight != initialBottomSheetHeight;
 
-          return AddNotesSheet(
-            height: modalSheetHeight,
-            maxLines: maxLines,
-            onPressExpand: () {
-              setState(() {
-                modalSheetHeight = isHeightChanged ? initialBottomSheetHeight : size.height * 0.5;
-                maxLines = isHeightChanged ? 4 : 16;
-              });
+          return BlocBuilder<SchedulesBloc, SchedulesState>(
+            builder: (context, state) {
+              if (state is! SchedulesSuccess) return const SizedBox();
+
+              final schedulesToAdd = state.schedulesToAdd ?? [];
+
+              return AddNotesSheet(
+                height: modalSheetHeight,
+                maxLines: maxLines,
+                onPressExpand: () {
+                  setState(() {
+                    modalSheetHeight = isHeightChanged ? initialBottomSheetHeight : size.height * 0.5;
+                    maxLines = isHeightChanged ? 4 : 16;
+                  });
+                },
+                onPressAdd: (notes) {
+                  for (final schedule in schedulesToAdd) {
+                    schedule.notes = notes;
+                  }
+                  context.read<SchedulesBloc>().add(SchedulesToAddEvent(schedulesToAdd));
+                  context.navigator.pop();
+                },
+              );
             },
           );
         },

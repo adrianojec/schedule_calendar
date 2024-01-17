@@ -2,22 +2,22 @@ import 'package:intl/intl.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 
 class ScheduleModel {
-  final String? id;
-  final String notes;
-  final DateTime date;
-  final Duration startTime;
-  final Duration endTime;
-  final String eventId;
-  final int durationByMinutes;
+  String? id;
+  String notes;
+  DateTime date;
+  Duration startTime;
+  Duration endTime;
+  String eventId;
+  int? durationByMinutes;
 
   ScheduleModel({
     this.id,
+    this.durationByMinutes,
     required this.notes,
     required this.date,
     required this.startTime,
     required this.endTime,
     required this.eventId,
-    required this.durationByMinutes,
   });
 
   factory ScheduleModel.fromJson(Map<String, dynamic> json) {
@@ -42,4 +42,10 @@ class ScheduleModel {
         "endTime": endTime,
         "eventId": [eventId],
       };
+
+  @override
+  String toString() {
+    super.toString();
+    return 'ScheduleModel(notes: $notes, date: $date, startTime: $startTime, endTime: $endTime, eventId: $eventId)';
+  }
 }

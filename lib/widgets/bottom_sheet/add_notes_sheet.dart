@@ -17,11 +17,12 @@ class AddNotesSheet extends StatelessWidget {
 
   final double? height;
   final VoidCallback? onPressExpand;
-  final VoidCallback? onPressAdd;
+  final void Function(String)? onPressAdd;
   final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
+    final textController = TextEditingController();
     final textTheme = context.appTheme.textTheme;
 
     return ScheduleCalendarBottomSheet(
@@ -39,6 +40,7 @@ class AddNotesSheet extends StatelessWidget {
               child: SvgPicture.asset(expandIcon),
             ),
             TextField(
+              controller: textController,
               maxLines: maxLines,
               style: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w400),
               decoration: InputDecoration(
@@ -58,7 +60,7 @@ class AddNotesSheet extends StatelessWidget {
                 color: Palette.boscoGrey,
               ),
               child: IconButton(
-                onPressed: onPressAdd,
+                onPressed: () => onPressAdd?.call(textController.text),
                 color: Palette.white,
                 icon: const Icon(
                   Icons.add,

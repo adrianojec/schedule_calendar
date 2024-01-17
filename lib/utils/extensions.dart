@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/models/models.dart';
 
@@ -34,4 +35,10 @@ extension IntWithDurationExt on int {
   Duration get year => Duration(days: this * 365);
   Duration get hours => Duration(hours: this);
   Duration get minutes => Duration(minutes: this);
+}
+
+// Schedule Model
+extension ScheduleModelExt on ScheduleModel {
+  String get formattedDate => DateFormat('EEEE, dd MMMM, yyyy').format(date);
+  String get formattedTime => '${startTime.formattedTime} - ${endTime.formattedTime}';
 }

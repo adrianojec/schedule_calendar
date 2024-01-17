@@ -9,8 +9,12 @@ final class SchedulesLoading extends SchedulesState {}
 
 final class SchedulesSuccess extends SchedulesState {
   final List<ScheduleModel> schedules;
+  final List<ScheduleModel>? schedulesToAdd;
 
-  SchedulesSuccess(this.schedules);
+  SchedulesSuccess({
+    required this.schedules,
+    this.schedulesToAdd,
+  });
 }
 
 final class SchedulesError extends SchedulesState {

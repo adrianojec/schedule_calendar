@@ -12,6 +12,7 @@ part 'schedules_state.dart';
 class SchedulesBloc extends Bloc<SchedulesEvent, SchedulesState> {
   SchedulesBloc() : super(SchedulesInitial()) {
     on<SchedulesInitialFetchEvent>(_schedulesInitialFetchEvent);
+    on<SchedulesToAddEvent>(_schedulesToAddEvent);
   }
 
   Future<void> _schedulesInitialFetchEvent(SchedulesInitialFetchEvent event, Emitter<SchedulesState> emit) async {
@@ -20,9 +21,18 @@ class SchedulesBloc extends Bloc<SchedulesEvent, SchedulesState> {
 
       final schedules = await getIt<AirtableService>().getScheduledEvents();
 
-      emit(SchedulesSuccess(schedules));
+      emit(SchedulesSuccess(schedules: schedules));
     } catch (e) {
       emit(SchedulesError(e.toString()));
     }
+  }
+
+  void _schedulesToAddEvent(SchedulesToAddEvent event, Emitter<SchedulesState> emit) {
+    final prevSchedules = (state as SchedulesSuccess).schedules;
+
+    emit(SchedulesSuccess(
+      schedules: prevSchedules,
+      schedulesToAdd: event.schedulesToAdd,
+    ));
   }
 }

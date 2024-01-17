@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_calendar/constants/constants.dart';
-import 'package:schedule_calendar/screens/screens.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
 
 class HourList extends StatefulWidget {
   const HourList({
-    super.key,
     required this.hours,
+    this.onSelectTime,
+    super.key,
   });
 
   final List<Duration> hours;
+  final void Function(Duration?)? onSelectTime;
 
   @override
   State<HourList> createState() => _HourListState();
@@ -39,14 +40,14 @@ class _HourListState extends State<HourList> {
             if (selectedHour != hourList[index]) ...[
               Expanded(
                 child: ScheduleCalendarButton(
-                  text: '${hourList[index].formattedTime}',
+                  text: hourList[index].formattedTime,
                   onTap: () => _onSelectTime(hourList[index]),
                 ),
               ),
             ] else ...[
               Expanded(
                 child: ScheduleCalendarButton(
-                  text: '${hourList[index].inHours}:${hourList[index].inMinutes}',
+                  text: hourList[index].formattedTime,
                   onTap: () => _onSelectTime(null),
                   buttonColor: Palette.matTurquoise,
                 ),
@@ -56,7 +57,7 @@ class _HourListState extends State<HourList> {
                 child: ScheduleCalendarButton(
                   text: next,
                   buttonColor: Palette.blackPanther,
-                  onTap: _navigateToScheduleSessionScreen,
+                  onTap: () => widget.onSelectTime?.call(selectedHour),
                 ),
               ),
             ],
@@ -67,6 +68,4 @@ class _HourListState extends State<HourList> {
   }
 
   void _onSelectTime(Duration? time) => setState(() => selectedHour = time);
-
-  void _navigateToScheduleSessionScreen() => context.navigator.pushNamed(ScheduleSessionScreen.routeName);
 }
