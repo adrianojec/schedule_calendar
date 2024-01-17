@@ -15,6 +15,8 @@ class UserProfile extends StatelessWidget {
     super.key,
   });
 
+  factory UserProfile.loading() => const LoadingUserProfile();
+
   final String imageUrl;
   final String name;
   final String email;
@@ -27,7 +29,7 @@ class UserProfile extends StatelessWidget {
 
     return BlocBuilder<CoachBloc, CoachState>(
       builder: (context, state) {
-        if (state is! CoachSuccess) return const LoadingUserProfile();
+        if (state is! CoachSuccess) return UserProfile.loading();
 
         final coach = state.coach;
 

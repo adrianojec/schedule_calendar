@@ -133,7 +133,7 @@ class SelectEventTimeScreen extends StatelessWidget {
                 ),
                 const VerticalSpace(10.0),
                 Text(
-                  'Duration: ${event?.durationInMinutes} mins',
+                  'Duration: ${event?.formattedDuration}',
                   style: textTheme.bodyLarge?.copyWith(
                     fontSize: 11.0,
                     fontWeight: FontWeight.w300,
@@ -143,7 +143,7 @@ class SelectEventTimeScreen extends StatelessWidget {
                 Expanded(
                   child: SizedBox(
                     width: size.width * 0.6,
-                    child: HourList(hours: hours()),
+                    child: HourList(hours: event?.durationInMinutes == 30 ? hoursWith30minutes() : hours()),
                   ),
                 ),
               ],

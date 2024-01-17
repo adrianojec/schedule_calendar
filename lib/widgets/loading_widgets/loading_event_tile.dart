@@ -6,8 +6,8 @@ import 'package:shimmer/shimmer.dart';
 const double _containerWidth = 40.0;
 const double _containerHeight = 12.0;
 
-class LoadingEventTile extends StatelessWidget {
-  const LoadingEventTile({super.key});
+class LoadingEventTile extends EventTile {
+  const LoadingEventTile({super.key}) : super(event: null);
 
   @override
   Widget build(BuildContext context) {

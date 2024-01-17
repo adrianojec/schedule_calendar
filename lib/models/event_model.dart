@@ -7,7 +7,7 @@ class EventModel {
   String sessionType;
   int durationInMinutes;
   List<String> coachId;
-  List<String> idFromCoachId;
+  List<int> idFromCoachId;
 
   EventModel({
     required this.id,
@@ -22,14 +22,14 @@ class EventModel {
   });
 
   factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
-        id: json["eventId"],
-        imageUrl: json["imageUrl"],
-        title: json["title"],
-        description: json["description"],
-        type: json["type"],
-        sessionType: json["sessionType"],
-        durationInMinutes: json["durationByMinutes"],
-        coachId: List<String>.from(json["coachId"].map((coachId) => coachId)),
-        idFromCoachId: List<String>.from(json["id (from CoachId)"].map((id) => id)),
+        id: json["id"],
+        imageUrl: json["fields"]["imageUrl"],
+        title: json["fields"]["title"],
+        description: json["fields"]["description"],
+        type: json["fields"]["type"],
+        sessionType: json["fields"]["sessionType"],
+        durationInMinutes: json["fields"]["durationByMinutes"],
+        coachId: List<String>.from(json["fields"]["coachId"].map((coachId) => coachId)),
+        idFromCoachId: List<int>.from(json["fields"]["id (from CoachId)"].map((id) => id)),
       );
 }

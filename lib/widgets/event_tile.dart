@@ -15,14 +15,16 @@ class EventTile extends StatelessWidget {
     super.key,
   });
 
-  final EventModel event;
+  factory EventTile.loading() => const LoadingEventTile();
+
+  final EventModel? event;
   final VoidCallback? onPressed;
   final Widget? eventDate;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = context.appTheme.textTheme;
-    final isCallType = event.type == 'Call';
+    final isCallType = event?.type == 'Call';
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8.0),
@@ -42,7 +44,7 @@ class EventTile extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: 24.0,
-              backgroundImage: NetworkImage(event.imageUrl),
+              backgroundImage: NetworkImage(event?.imageUrl ?? userImage),
             ),
             const HorizontalSpace(16.0),
             Expanded(
@@ -56,7 +58,7 @@ class EventTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            event.title,
+                            '${event?.title}',
                             style: textTheme.bodySmall?.copyWith(
                               fontWeight: FontWeight.w500,
                               letterSpacing: -0.2,
@@ -89,14 +91,14 @@ class EventTile extends StatelessWidget {
                                         size: 11.0,
                                       )
                                     : null,
-                                text: event.type,
+                                text: event?.type,
                               ),
                             ],
                           )
                         ],
                       ),
                       ScheduleCalendarButton(
-                        text: '${event.durationInMinutes} mins',
+                        text: '${event?.formattedDuration}',
                         buttonColor: Palette.matGreen,
                         textStyle: textTheme.bodyLarge?.copyWith(color: Palette.white),
                         padding: const EdgeInsets.symmetric(
@@ -110,7 +112,7 @@ class EventTile extends StatelessWidget {
                   const VerticalSpace(7.0),
                   eventDate ??
                       Text(
-                        event.description,
+                        '${event?.description}',
                         style: textTheme.bodySmall,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

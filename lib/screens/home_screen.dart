@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                     builder: (context, state) {
                       if (state is! EventsSuccess) {
                         return Column(
-                          children: List.generate(3, (index) => const LoadingEventTile()),
+                          children: List.generate(3, (index) => EventTile.loading()),
                         );
                       }
 

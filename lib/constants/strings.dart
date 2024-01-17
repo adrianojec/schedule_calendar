@@ -21,7 +21,6 @@ const cancel = 'Cancel';
 const done = 'Done';
 const durationTooltipMessage = 'Duration of this session.';
 const emptyString = '';
-const fields = 'fields';
 const fullDateFormat = 'MMMM d, yyyy';
 const fullDayFormat = 'MMMM';
 const locationTooltipMessage = 'Location will be confirmed upon confirmation.';

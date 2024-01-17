@@ -20,7 +20,7 @@ class AirtableService {
 
     final result = json.decode(response.body);
 
-    final coaches = (result[records] as List).map((coach) => CoachModel.fromJson(coach[fields])).toList();
+    final coaches = (result[records] as List).map((coach) => CoachModel.fromJson(coach)).toList();
 
     return coaches;
   }
@@ -35,8 +35,23 @@ class AirtableService {
 
     final result = json.decode(response.body);
 
-    final events = (result[records] as List).map((event) => EventModel.fromJson(event[fields])).toList();
+    final events = (result[records] as List).map((event) => EventModel.fromJson(event)).toList();
 
     return events;
+  }
+
+  Future<List<ScheduleModel>> getScheduledEvents() async {
+    final url = Uri.parse('$_baseUrl/$_domainId/Schedules');
+    final header = {"Authorization": "Bearer $_apiKey"};
+
+    final response = await http.get(url, headers: header);
+
+    if (response.statusCode != 200) throw Exception(response.body);
+
+    final result = json.decode(response.body);
+
+    final schedules = (result[records] as List).map((schedule) => ScheduleModel.fromJson(schedule)).toList();
+
+    return schedules;
   }
 }

@@ -5,10 +5,8 @@ import 'package:shimmer/shimmer.dart';
 
 const double _containerHeight = 12.0;
 
-class LoadingUserProfile extends StatelessWidget {
-  const LoadingUserProfile({
-    super.key,
-  });
+class LoadingUserProfile extends UserProfile {
+  const LoadingUserProfile({super.key}) : super(imageUrl: emptyString);
 
   @override
   Widget build(BuildContext context) {

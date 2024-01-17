@@ -16,11 +16,11 @@ class CoachModel {
   });
 
   factory CoachModel.fromJson(Map<String, dynamic> json) => CoachModel(
-        id: json['coachId'],
-        userName: json['userName'],
-        firstName: json['firstName'],
-        lastName: json['lastName'],
-        role: json['role'],
-        imageUrl: json['imageUrl'],
+        id: json['id'],
+        userName: json["fields"]['userName'],
+        firstName: json["fields"]['firstName'],
+        lastName: json["fields"]['lastName'],
+        role: json["fields"]['role'],
+        imageUrl: json["fields"]['imageUrl'],
       );
 }
