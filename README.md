@@ -2,8 +2,8 @@
 
 ## Getting started
 
-<!-- Project setup -->
 
+<!-- Project setup -->
 ### Project setup
 
 1. Clone the repo
@@ -16,15 +16,15 @@
    flutter pub get
    ```
 
+   
 <!-- Airtable setup -->
-
 ### Airtable setup
 
 1. Create an airtable account and [login](https://airtable.com/login)
 2. Access the base [Schedule Calendar](https://airtable.com/invite/l?inviteId=invK7DI1WLSkp4oHp&inviteToken=baffa1f25880ae4640112f59e89d9638080d26305dc47d5f2e1af0c4a43a9610&utm_medium=email&utm_source=product_team&utm_content=transactional-alerts)
 
-<!-- Create token -->
 
+<!-- Create token -->
 ### Create token
 
 1. Go to [Create token page](https://airtable.com/create/tokens).
@@ -38,8 +38,8 @@
 
 4. A modal will pop and make sure copy your `token` as this will be your `API_KEY`.
 
-<!-- Get base id -->
 
+<!-- Get base id -->
 ### Get base ID
 
 1. Select your base [Schedule Calendar](https://airtable.com/).
@@ -48,8 +48,8 @@
 4. On the `Introduction` tab, look for: `The ID of this base is ...`.
 5. Make sure to copy as this will your `SCHEMA_ID`.
 
-<!-- Environment variables -->
 
+<!-- Environment variables -->
 ### Environment variables
 
 1. Create a file named `.env` at the root of the project.
@@ -62,8 +62,8 @@
       SCHEMA_ID=your-schema-id
    ```
 
+   
 <!-- Run the project -->
-
 ### Run the project
 
 ```bash
