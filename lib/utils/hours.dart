@@ -1,8 +1,10 @@
 import 'package:schedule_calendar/models/models.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 
-List<Duration> hours(List<ScheduleModel> scheduledTimes) {
+List<Duration> hours(List<ScheduleModel> scheduledTimes, {bool has30mins = false}) {
   final hours = <Duration>[];
+  // Sorts the list based on their [startTime]
+  scheduledTimes.sort((a, b) => a.startTime.compareTo(b.startTime));
   final hoursWithDuration = scheduledTimes
       .map((e) => {
             "startTime": e.startTime,
@@ -12,46 +14,55 @@ List<Duration> hours(List<ScheduleModel> scheduledTimes) {
 
   for (int index = 8; index <= 20; index++) {
     final hour = index.hours;
+
+    // Checks if current hour is existing in [hoursWithDuration] and has 120 mins of Duration.
+    // Skips the current and next hour if the condition is true.
     final shouldSkip2Hours = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 120);
-    final shouldSkip1Hours = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 60);
-    final shouldSkip30mins = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 30);
-
-    if (shouldSkip1Hours || shouldSkip30mins) continue;
-
-    // Skips the next hour when the current hour is already existed in [hoursWithDuration]
-    // This makes sure that 2 hours is already occupied
     if (shouldSkip2Hours) {
       index += 1;
       continue;
     }
 
-    hours.add(hour);
+    // Checks if current hour is existing in [hoursWithDuration] and has 60 mins of Duration.
+    // Skips the current if the condition is true.
+    final shouldSkip1Hours = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 60);
+    if (shouldSkip1Hours) continue;
+
+    // Checks if current hour is existing in [hoursWithDuration] with [XX:00] format and has 30 mins of Duration.
+    // Proceeds to the next condition if condition is true 'cause it will check the [XX:30] format.
+    final shouldSkip30mins = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 30);
+    if (!shouldSkip30mins) hours.add(hour);
+
+    // Checks if hours will be rendered by 30 mins - [has30mins]
+    if (has30mins) {
+      // Adds 30 mins to the current hour
+      final hourWith30mins = Duration(hours: hour.inHours, minutes: 30);
+
+      // Checks if [hourWith30mins] is existing in [hoursWithDuration] and has 30 mins of Duration.
+      // Skips the current hour if the condition is true
+      final shouldSkip30mins = hoursWithDuration.any((hr) => hr["startTime"] == hourWith30mins && hr["duration"] == 30);
+      if (shouldSkip30mins) continue;
+
+      // If the condition is false, it will be added to [hours]
+      hours.add(hourWith30mins);
+    }
   }
 
-  return hours;
+  return has30mins ? hours : _removeHours(hours);
 }
 
-List<Duration> hoursWith30minutes(List<ScheduleModel> scheduledTimes) {
-  final hoursWithDuration = scheduledTimes
-      .map((e) => {
-            "startTime": e.startTime,
-            "duration": e.durationByMinutes,
-          })
-      .toList();
-  final remainingHours = hours(scheduledTimes);
-  final availableHours = <Duration>[];
+List<Duration> _removeHours(List<Duration> hours) {
+  final newHours = [...hours];
 
-  // This will add hours with [XX:30] format to the remaining hours from the method [hours()].
-  // Then will check the hours with [XX:30] format from [remainingHours], if it exists, then it will be skipped
-  // if not, [hour] or [with30mins] will be added in the [availableHours]
-  for (final hour in remainingHours) {
-    final with30mins = Duration(hours: hour.inHours, minutes: 30);
-    final shouldSkip = hoursWithDuration.any((hr) => hr["startTime"] == hour && hr["duration"] == 30);
-    final shouldSkip30mins = hoursWithDuration.any((hr) => hr["startTime"] == with30mins && hr["duration"] == 30);
+  for (int index = 0; index <= newHours.length - 1; index++) {
+    final currentHour = newHours[index];
+    final nextHour = Duration(hours: currentHour.inHours + 1, minutes: 0);
 
-    if (!shouldSkip) availableHours.add(hour);
-    if (!shouldSkip30mins) availableHours.add(with30mins);
+    if (index == (newHours.length - 1)) continue;
+    if (newHours.contains(nextHour)) continue;
+
+    newHours.remove(currentHour);
   }
 
-  return availableHours;
+  return newHours;
 }

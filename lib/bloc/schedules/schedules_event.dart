@@ -10,3 +10,5 @@ class SchedulesToAddEvent extends SchedulesEvent {
 
   SchedulesToAddEvent(this.schedulesToAdd);
 }
+
+class SchedulesSendToApiEvent extends SchedulesEvent {}

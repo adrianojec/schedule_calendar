@@ -6,7 +6,6 @@ import 'package:schedule_calendar/bloc/events/events_bloc.dart';
 import 'package:schedule_calendar/bloc/schedules/schedules_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/models/models.dart';
-import 'package:schedule_calendar/models/schedule_model.dart';
 import 'package:schedule_calendar/screens/screens.dart';
 import 'package:schedule_calendar/utils/hours.dart';
 import 'package:schedule_calendar/utils/utils.dart';
@@ -152,9 +151,7 @@ class SelectEventTimeScreen extends StatelessWidget {
                         if (state is! SchedulesSuccess || event == null) return const SizedBox();
 
                         return HourList(
-                          hours: event.durationInMinutes == 30
-                              ? hoursWith30minutes(state.schedules)
-                              : hours(state.schedules),
+                          hours: hours(state.schedules, has30mins: event.durationInMinutes == 30),
                           onSelectTime: (selectedTime) => _onSelectTime(
                             context,
                             selectedTime: selectedTime,

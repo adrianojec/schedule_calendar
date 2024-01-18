@@ -17,7 +17,7 @@ extension DateTimeExt on DateTime {
 
 // Duration
 extension DurationExt on Duration {
-  String get formattedTime => ('$inHours:${inMinutes.remainder(60)}').padRight(5, '0');
+  String get formattedTime => ('$inHours:${inMinutes.remainder(60).toString().padRight(2, '0')}');
 }
 
 // Event Model
@@ -41,4 +41,5 @@ extension IntWithDurationExt on int {
 extension ScheduleModelExt on ScheduleModel {
   String get formattedDate => DateFormat('EEEE, dd MMMM, yyyy').format(date);
   String get formattedTime => '${startTime.formattedTime} - ${endTime.formattedTime}';
+  String get formattedDuration => '$durationByMinutes mins';
 }

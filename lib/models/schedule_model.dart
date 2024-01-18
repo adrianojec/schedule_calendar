@@ -1,9 +1,10 @@
 import 'package:intl/intl.dart';
 import 'package:schedule_calendar/constants/constants.dart';
+import 'package:schedule_calendar/utils/utils.dart';
 
 class ScheduleModel {
   String? id;
-  String notes;
+  String? notes;
   DateTime date;
   Duration startTime;
   Duration endTime;
@@ -13,7 +14,7 @@ class ScheduleModel {
   ScheduleModel({
     this.id,
     this.durationByMinutes,
-    required this.notes,
+    this.notes,
     required this.date,
     required this.startTime,
     required this.endTime,
@@ -38,8 +39,8 @@ class ScheduleModel {
   Map<String, dynamic> toJson() => {
         "notes": notes,
         "date": DateFormat(dateFormat).format(date),
-        "startTime": startTime,
-        "endTime": endTime,
+        "startTime": startTime.formattedTime,
+        "endTime": endTime.formattedTime,
         "eventId": [eventId],
       };
 

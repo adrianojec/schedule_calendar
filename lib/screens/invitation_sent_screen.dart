@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:schedule_calendar/bloc/events/events_bloc.dart';
+import 'package:schedule_calendar/bloc/schedules/schedules_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
 import 'package:schedule_calendar/screens/screens.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
 
 const double _closeButtonSize = 34.0;
-const List<Map<String, String>> _scheduledEvents = [
-  {"date": "Thursday, 18 March, 2024", "time": "14:00 - 16:00", "duration": "120 mins"},
-  {"date": "Thursday, 19 March, 2024", "time": "8:00 - 10:00", "duration": "120 mins"},
-  {"date": "Thursday, 24 March, 2024", "time": "19:30 - 20:00", "duration": "120 mins"},
-];
 
 class InvitationSentScreen extends StatelessWidget {
   static const String routeName = '/invitation-sent-screen';
@@ -50,9 +48,17 @@ class InvitationSentScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: Column(
                   children: [
-                    Text(
-                      'Your 2hr Personal Training sessions invitation has been sent to',
-                      style: textTheme.headlineLarge,
+                    BlocBuilder<EventsBloc, EventsState>(
+                      builder: (context, state) {
+                        if (state is! EventsSuccess) return const Center(child: CircularProgressIndicator());
+
+                        final selectedEvent = state.selectedEvent;
+
+                        return Text(
+                          'Your ${selectedEvent?.title} sessions invitation has been sent to',
+                          style: textTheme.headlineLarge,
+                        );
+                      },
                     ),
                     const VerticalSpace(24.0),
                     const UserProfile(
@@ -60,38 +66,48 @@ class InvitationSentScreen extends StatelessWidget {
                       textColor: Palette.blancoWhite,
                     ),
                     const VerticalSpace(24.0),
-                    ..._scheduledEvents.map(
-                      (event) => Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    BlocBuilder<SchedulesBloc, SchedulesState>(
+                      builder: (context, state) {
+                        if (state is! SchedulesSuccess) return const SizedBox();
+
+                        final schedules = state.schedulesToAdd ?? [];
+
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: schedules.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  event['date'] ?? emptyString,
-                                  style: textTheme.bodySmall?.copyWith(color: Palette.blancoWhite),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      schedules[index].formattedDate,
+                                      style: textTheme.bodySmall?.copyWith(color: Palette.blancoWhite),
+                                    ),
+                                    const VerticalSpace(8.0),
+                                    Text(
+                                      schedules[index].formattedTime,
+                                      style: textTheme.bodySmall?.copyWith(color: Palette.blancoWhite),
+                                    ),
+                                  ],
                                 ),
-                                const VerticalSpace(8.0),
-                                Text(
-                                  event['time'] ?? emptyString,
-                                  style: textTheme.bodySmall?.copyWith(color: Palette.blancoWhite),
+                                ScheduleCalendarButton(
+                                  text: schedules[index].formattedDuration,
+                                  buttonColor: Palette.matGreen,
+                                  textStyle: textTheme.bodyLarge?.copyWith(color: Palette.white),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                    horizontal: 12.0,
+                                  ),
                                 ),
                               ],
                             ),
-                            ScheduleCalendarButton(
-                              text: event['duration'],
-                              buttonColor: Palette.matGreen,
-                              textStyle: textTheme.bodyLarge?.copyWith(color: Palette.white),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8.0,
-                                horizontal: 12.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
                     const VerticalSpace(16.0),
                     Row(

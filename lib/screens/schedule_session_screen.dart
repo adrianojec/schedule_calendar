@@ -31,8 +31,9 @@ class ScheduleSessionScreen extends StatelessWidget {
               Center(
                 child: SizedBox(
                   width: size.width * 0.6,
-                  child: const ScheduleCalendarButton(
+                  child: ScheduleCalendarButton(
                     text: addNewEvent,
+                    onTap: () => context.navigator.pushNamed(SelectEventDateScreen.routeName),
                   ),
                 ),
               ),
@@ -67,6 +68,7 @@ class ScheduleSessionScreen extends StatelessWidget {
               child: BlocBuilder<SchedulesBloc, SchedulesState>(
                 builder: (context, state) {
                   if (state is! SchedulesSuccess) return const SizedBox();
+                  if (state.schedulesToAdd == null) return const SizedBox();
 
                   final schedulesToAdd = state.schedulesToAdd ?? [];
                   final schedulesToAddLength = state.schedulesToAdd?.length ?? 0;
@@ -195,7 +197,10 @@ class ScheduleSessionScreen extends StatelessWidget {
           onLoading: () {
             Future.delayed(
               const Duration(seconds: 1),
-              () => context.navigator.pushNamed(InvitationSentScreen.routeName),
+              () {
+                context.read<SchedulesBloc>().add(SchedulesSendToApiEvent());
+                context.navigator.pushNamed(InvitationSentScreen.routeName);
+              },
             );
           },
         ),

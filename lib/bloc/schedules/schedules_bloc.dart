@@ -13,6 +13,7 @@ class SchedulesBloc extends Bloc<SchedulesEvent, SchedulesState> {
   SchedulesBloc() : super(SchedulesInitial()) {
     on<SchedulesInitialFetchEvent>(_schedulesInitialFetchEvent);
     on<SchedulesToAddEvent>(_schedulesToAddEvent);
+    on<SchedulesSendToApiEvent>(_schedulesSendToApiEvent);
   }
 
   Future<void> _schedulesInitialFetchEvent(SchedulesInitialFetchEvent event, Emitter<SchedulesState> emit) async {
@@ -34,5 +35,24 @@ class SchedulesBloc extends Bloc<SchedulesEvent, SchedulesState> {
       schedules: prevSchedules,
       schedulesToAdd: event.schedulesToAdd,
     ));
+  }
+
+  Future<void> _schedulesSendToApiEvent(SchedulesSendToApiEvent event, Emitter<SchedulesState> emit) async {
+    final prevSchedulesToAdd = (state as SchedulesSuccess).schedulesToAdd;
+    final prevSchedules = (state as SchedulesSuccess).schedules;
+
+    try {
+      emit(SchedulesLoading());
+
+      if (prevSchedulesToAdd == null) return;
+
+      final schedules = await getIt<AirtableService>().addScheduledEvents(prevSchedulesToAdd);
+
+      prevSchedules.addAll(schedules);
+
+      emit(SchedulesSuccess(schedules: prevSchedules, schedulesToAdd: schedules));
+    } catch (e) {
+      emit(SchedulesError(e.toString()));
+    }
   }
 }

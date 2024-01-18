@@ -16,7 +16,10 @@ class ScheduleCalendar extends StatelessWidget {
       providers: [
         BlocProvider<CoachBloc>(create: (_) => CoachBloc()..add(CoachInitialFetchEvent())),
         BlocProvider<EventsBloc>(create: (_) => EventsBloc()..add(EventsInitialFetchEvent())),
-        BlocProvider<SchedulesBloc>(create: (_) => SchedulesBloc()..add(SchedulesInitialFetchEvent())),
+        BlocProvider<SchedulesBloc>(
+            create: (_) => SchedulesBloc()
+              ..add(SchedulesInitialFetchEvent())
+              ..add(SchedulesToAddEvent(List.empty(growable: true)))),
       ],
       child: MaterialApp(
         theme: scheduleCalendarTheme,
