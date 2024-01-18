@@ -57,9 +57,9 @@
 3. Populate necessary keys from previous steps:
 
    ```
-      BASE_URL=https://api.airtable.com/v0
-      API_KEY=your-api-key
-      SCHEMA_ID=your-schema-id
+   BASE_URL=https://api.airtable.com/v0
+   API_KEY=your-api-key
+   SCHEMA_ID=your-schema-id
    ```
 
    
