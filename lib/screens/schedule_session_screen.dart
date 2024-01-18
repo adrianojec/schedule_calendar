@@ -68,7 +68,7 @@ class ScheduleSessionScreen extends StatelessWidget {
               child: BlocBuilder<SchedulesBloc, SchedulesState>(
                 builder: (context, state) {
                   if (state is! SchedulesSuccess) return const SizedBox();
-                  if (state.schedulesToAdd == null) return const SizedBox();
+                  if (state.schedulesToAdd == null || state.schedulesToAdd?.isEmpty == true) return const SizedBox();
 
                   final schedulesToAdd = state.schedulesToAdd ?? [];
                   final schedulesToAddLength = state.schedulesToAdd?.length ?? 0;

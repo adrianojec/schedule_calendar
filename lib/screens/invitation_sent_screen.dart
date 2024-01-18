@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:schedule_calendar/bloc/events/events_bloc.dart';
 import 'package:schedule_calendar/bloc/schedules/schedules_bloc.dart';
 import 'package:schedule_calendar/constants/constants.dart';
+import 'package:schedule_calendar/models/schedule_model.dart';
 import 'package:schedule_calendar/screens/screens.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 import 'package:schedule_calendar/widgets/widgets.dart';
@@ -50,7 +51,7 @@ class InvitationSentScreen extends StatelessWidget {
                   children: [
                     BlocBuilder<EventsBloc, EventsState>(
                       builder: (context, state) {
-                        if (state is! EventsSuccess) return const Center(child: CircularProgressIndicator());
+                        if (state is! EventsSuccess) return const SizedBox();
 
                         final selectedEvent = state.selectedEvent;
 
@@ -68,7 +69,9 @@ class InvitationSentScreen extends StatelessWidget {
                     const VerticalSpace(24.0),
                     BlocBuilder<SchedulesBloc, SchedulesState>(
                       builder: (context, state) {
-                        if (state is! SchedulesSuccess) return const SizedBox();
+                        if (state is! SchedulesSuccess) {
+                          return const Center(child: CircularProgressIndicator.adaptive());
+                        }
 
                         final schedules = state.schedulesToAdd ?? [];
 
@@ -166,8 +169,11 @@ class InvitationSentScreen extends StatelessWidget {
     );
   }
 
-  void _navigateToHomeScreen(BuildContext context) => context.navigator.pushNamedAndRemoveUntil(
-        HomeScreen.routeName,
-        (route) => false,
-      );
+  void _navigateToHomeScreen(BuildContext context) {
+    context.read<SchedulesBloc>().add(SchedulesToAddEvent(const <ScheduleModel>[]));
+    context.navigator.pushNamedAndRemoveUntil(
+      HomeScreen.routeName,
+      (route) => false,
+    );
+  }
 }

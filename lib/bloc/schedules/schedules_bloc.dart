@@ -29,6 +29,8 @@ class SchedulesBloc extends Bloc<SchedulesEvent, SchedulesState> {
   }
 
   void _schedulesToAddEvent(SchedulesToAddEvent event, Emitter<SchedulesState> emit) {
+    if (state is! SchedulesSuccess) return;
+
     final prevSchedules = (state as SchedulesSuccess).schedules;
 
     emit(SchedulesSuccess(

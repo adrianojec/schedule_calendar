@@ -30,9 +30,11 @@ class SelectEventDateScreen extends StatelessWidget {
               if (state is! SchedulesSuccess) return const Center(child: CircularProgressIndicator.adaptive());
 
               final scheduleDates = state.schedules.map((e) => DateFormat(dateFormat).format(e.date)).toList();
+              final schedulesToAdd = state.schedulesToAdd;
 
               return Calendar(
                 scheduledDates: scheduleDates,
+                schedulesToAdd: schedulesToAdd,
                 onDaySelected: (selectedDay, _) {
                   if (scheduleDates.contains(DateFormat(dateFormat).format(selectedDay))) return;
 

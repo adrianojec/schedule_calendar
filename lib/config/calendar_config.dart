@@ -107,5 +107,6 @@ class CalendarConfig {
         rangeStartDecoration: _rangeDecoration,
         rangeEndDecoration: _rangeDecoration,
         rangeHighlightColor: Palette.matTurquoise.withOpacity(0.4),
+        withinRangeDecoration: const BoxDecoration(color: Colors.transparent),
       );
 }

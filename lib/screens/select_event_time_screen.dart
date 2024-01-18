@@ -150,8 +150,13 @@ class SelectEventTimeScreen extends StatelessWidget {
                       builder: (context, state) {
                         if (state is! SchedulesSuccess || event == null) return const SizedBox();
 
+                        final schedules = [...state.schedules, ...state.schedulesToAdd ?? <ScheduleModel>[]];
+
                         return HourList(
-                          hours: hours(state.schedules, has30mins: event.durationInMinutes == 30),
+                          hours: hours(
+                            schedules,
+                            has30mins: event.durationInMinutes == 30,
+                          ),
                           onSelectTime: (selectedTime) => _onSelectTime(
                             context,
                             selectedTime: selectedTime,
@@ -183,9 +188,17 @@ class SelectEventTimeScreen extends StatelessWidget {
       startTime: selectedTime,
       endTime: selectedTime + event.durationInMinutes.minutes,
       eventId: event.id,
+      durationByMinutes: event.durationInMinutes,
     );
 
-    context.read<SchedulesBloc>().add(SchedulesToAddEvent([scheduleToAdd]));
+    final prevState = context.read<SchedulesBloc>().state as SchedulesSuccess;
+    final prevSchedulesToAdd = prevState.schedulesToAdd ?? <ScheduleModel>[];
+    final isExisting = prevSchedulesToAdd.any((prevSched) => prevSched.startTime == scheduleToAdd.startTime);
+
+    if (isExisting == false) {
+      context.read<SchedulesBloc>().add(SchedulesToAddEvent([...prevSchedulesToAdd, scheduleToAdd]));
+    }
+
     context.navigator.pushNamed(ScheduleSessionScreen.routeName);
   }
 }
