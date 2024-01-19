@@ -1,7 +1,11 @@
 import 'package:schedule_calendar/models/models.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 
-List<Duration> hours(List<ScheduleModel> scheduledTimes, {bool has30mins = false}) {
+List<Duration> hours(
+  List<ScheduleModel> scheduledTimes, {
+  bool has30mins = false,
+  int selectedDuration = 60,
+}) {
   final hours = <Duration>[];
   // Sorts the list based on their [startTime]
   scheduledTimes.sort((a, b) => a.startTime.compareTo(b.startTime));
@@ -48,7 +52,7 @@ List<Duration> hours(List<ScheduleModel> scheduledTimes, {bool has30mins = false
     }
   }
 
-  return has30mins ? hours : _removeHours(hours);
+  return selectedDuration == 120 ? _removeHours(hours) : hours;
 }
 
 List<Duration> _removeHours(List<Duration> hours) {

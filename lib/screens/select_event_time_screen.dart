@@ -156,6 +156,7 @@ class SelectEventTimeScreen extends StatelessWidget {
                           hours: hours(
                             schedules,
                             has30mins: event.durationInMinutes == 30,
+                            selectedDuration: event.durationInMinutes,
                           ),
                           onSelectTime: (selectedTime) => _onSelectTime(
                             context,
