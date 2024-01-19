@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => _showBottomSheet(context),
                         icon: SvgPicture.asset(calendarIcon),
                       ),
                       Container(
@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                           color: Palette.boscoGrey,
                         ),
                         child: IconButton(
-                          onPressed: () => _showBottomSheet(context),
+                          onPressed: () {},
                           color: Palette.white,
                           icon: const Icon(Icons.add),
                         ),

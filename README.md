@@ -66,6 +66,9 @@
 
 ### Run the project
 
-```bash
-flutter run
-```
+1. Choose an simulator
+2. Run:
+
+   ```bash
+   flutter run
+   ```
