@@ -72,3 +72,25 @@
    ```bash
    flutter run
    ```
+
+### Assumptions
+- On the first screen, UI where textfield is located is not a bottom sheet
+- Adding new event is for multiple sessions only
+- For multiple sessions, you can only add the same event
+- You can schedule the same event in a day but with different time
+- If you have multiple events to add, notes will be added on all events
+
+
+### Api implementation
+- Created a base and tables with details needed in the app
+     - Coaches
+     - Events
+     - Schedules
+
+- Use `Api Documentation` for getting these values:
+     - Base url
+     - Base id
+     - Model structures
+     - Return structures
+
+-  Then I used the http package to have a request to API and used POSTMAN as well for testing the request and the data needed for post request
