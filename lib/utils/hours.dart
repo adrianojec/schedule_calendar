@@ -1,11 +1,7 @@
 import 'package:schedule_calendar/models/models.dart';
 import 'package:schedule_calendar/utils/utils.dart';
 
-List<Duration> hours(
-  List<ScheduleModel> scheduledTimes, {
-  bool has30mins = false,
-  int selectedDuration = 60,
-}) {
+List<Duration> hours(List<ScheduleModel> scheduledTimes, {int selectedDuration = 60}) {
   final hours = <Duration>[];
   // Sorts the list based on their [startTime]
   scheduledTimes.sort((a, b) => a.startTime.compareTo(b.startTime));
@@ -38,7 +34,7 @@ List<Duration> hours(
     if (!shouldSkip30mins) hours.add(hour);
 
     // Checks if hours will be rendered by 30 mins - [has30mins]
-    if (has30mins) {
+    if (selectedDuration == 30) {
       // Adds 30 mins to the current hour
       final hourWith30mins = Duration(hours: hour.inHours, minutes: 30);
 
